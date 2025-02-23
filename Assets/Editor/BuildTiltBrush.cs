@@ -1054,94 +1054,94 @@ static class BuildTiltBrush
         }
     }
 
-    class TempSetOpenXrFeatureGroup : IDisposable
-    {
-        readonly List<UnityEngine.XR.OpenXR.Features.OpenXRFeature> enabledFeatures;
-        readonly List<UnityEngine.XR.OpenXR.Features.OpenXRFeature> requiredFeatures;
-        readonly BuildTargetGroup m_targetGroup;
+    // class TempSetOpenXrFeatureGroup : IDisposable
+    // {
+    //     readonly List<UnityEngine.XR.OpenXR.Features.OpenXRFeature> enabledFeatures;
+    //     readonly List<UnityEngine.XR.OpenXR.Features.OpenXRFeature> requiredFeatures;
+    //     readonly BuildTargetGroup m_targetGroup;
 
-        public TempSetOpenXrFeatureGroup(TiltBuildOptions tiltOptions)
-        {
-            enabledFeatures = new();
-            requiredFeatures = new();
-            List<string> requiredFeatureStrings = new();
+    //     public TempSetOpenXrFeatureGroup(TiltBuildOptions tiltOptions)
+    //     {
+    //         enabledFeatures = new();
+    //         requiredFeatures = new();
+    //         List<string> requiredFeatureStrings = new();
 
-            m_targetGroup = TargetToGroup(tiltOptions.Target);
+    //         m_targetGroup = TargetToGroup(tiltOptions.Target);
 
-            switch (tiltOptions.XrSdk)
-            {
-                case XrSdkMode.Oculus:
-                    // requiredFeatureStrings.Add("com.oculus.openxr.feature.oculusxr");
-                    // if (m_targetGroup == BuildTargetGroup.Android)
-                    // {
-                    //     requiredFeatureStrings.Add("com.unity.openxr.feature.oculusquest");
-                    // }
-                    break;
-            }
+    //         switch (tiltOptions.XrSdk)
+    //         {
+    //             case XrSdkMode.Oculus:
+    //                 // requiredFeatureStrings.Add("com.oculus.openxr.feature.oculusxr");
+    //                 // if (m_targetGroup == BuildTargetGroup.Android)
+    //                 // {
+    //                 //     requiredFeatureStrings.Add("com.unity.openxr.feature.oculusquest");
+    //                 // }
+    //                 break;
+    //         }
 
-            if (requiredFeatureStrings.Count == 0)
-            {
-                return;
-            }
+    //         if (requiredFeatureStrings.Count == 0)
+    //         {
+    //             return;
+    //         }
 
-            // Refresh list of features present in project, then iterate and disable all of them.
-            UnityEditor.XR.OpenXR.Features.FeatureHelpers.RefreshFeatures(m_targetGroup);
-            var featureList = new List<UnityEngine.XR.OpenXR.Features.OpenXRFeature>();
-            int featuresCount = UnityEngine.XR.OpenXR.OpenXRSettings.Instance.GetFeatures(featureList);
-            if (featuresCount > 0)
-            {
-                foreach (var feature in featureList)
-                {
-                    if (feature.enabled)
-                    {
-                        enabledFeatures.Add(feature);
-                    }
-                    feature.enabled = false;
-                }
-            }
+    //         // Refresh list of features present in project, then iterate and disable all of them.
+    //         UnityEditor.XR.OpenXR.Features.FeatureHelpers.RefreshFeatures(m_targetGroup);
+    //         var featureList = new List<UnityEngine.XR.OpenXR.Features.OpenXRFeature>();
+    //         int featuresCount = UnityEngine.XR.OpenXR.OpenXRSettings.Instance.GetFeatures(featureList);
+    //         if (featuresCount > 0)
+    //         {
+    //             foreach (var feature in featureList)
+    //             {
+    //                 if (feature.enabled)
+    //                 {
+    //                     enabledFeatures.Add(feature);
+    //                 }
+    //                 feature.enabled = false;
+    //             }
+    //         }
 
-            foreach (var feature in featureList)
-            {
-                if (feature.enabled)
-                {
-                    throw new BuildFailedException($"Shouldn't be here! {feature.name}");
-                }
-            }
+    //         foreach (var feature in featureList)
+    //         {
+    //             if (feature.enabled)
+    //             {
+    //                 throw new BuildFailedException($"Shouldn't be here! {feature.name}");
+    //             }
+    //         }
 
-            if (requiredFeatures.Count == 0)
-            {
-                return;
-            }
+    //         if (requiredFeatures.Count == 0)
+    //         {
+    //             return;
+    //         }
 
-            // Locate and enable features, fail if not found.
-            foreach (string requiredFeatureString in requiredFeatureStrings)
-            {
-                var requiredFeature = UnityEditor.XR.OpenXR.Features.FeatureHelpers.GetFeatureWithIdForBuildTarget(m_targetGroup, requiredFeatureString);
-                if (requiredFeature == null)
-                {
-                    throw new BuildFailedException($"Could not find required OpenXR Feature {requiredFeatureString}. Is it installed?");
-                }
-                requiredFeatures.Add(requiredFeature);
-                requiredFeature.enabled = true;
-            }
-        }
+    //         // Locate and enable features, fail if not found.
+    //         foreach (string requiredFeatureString in requiredFeatureStrings)
+    //         {
+    //             var requiredFeature = UnityEditor.XR.OpenXR.Features.FeatureHelpers.GetFeatureWithIdForBuildTarget(m_targetGroup, requiredFeatureString);
+    //             if (requiredFeature == null)
+    //             {
+    //                 throw new BuildFailedException($"Could not find required OpenXR Feature {requiredFeatureString}. Is it installed?");
+    //             }
+    //             requiredFeatures.Add(requiredFeature);
+    //             requiredFeature.enabled = true;
+    //         }
+    //     }
 
-        public void Dispose()
-        {
-            foreach (var requiredFeature in requiredFeatures)
-            {
-                if (!enabledFeatures.Contains(requiredFeature))
-                {
-                    requiredFeature.enabled = false;
-                }
-            }
+    //     public void Dispose()
+    //     {
+    //         foreach (var requiredFeature in requiredFeatures)
+    //         {
+    //             if (!enabledFeatures.Contains(requiredFeature))
+    //             {
+    //                 requiredFeature.enabled = false;
+    //             }
+    //         }
 
-            foreach (var enabledFeature in enabledFeatures)
-            {
-                enabledFeature.enabled = true;
-            }
-        }
-    }
+    //         foreach (var enabledFeature in enabledFeatures)
+    //         {
+    //             enabledFeature.enabled = true;
+    //         }
+    //     }
+    // }
 
     class TempSetXrPlugin : IDisposable
     {
@@ -1521,7 +1521,7 @@ static class BuildTiltBrush
         using (var unused10 = new TempSetAppNames(target, tiltOptions.Description))
         using (var unused7 = new TempSetXrPlugin(tiltOptions))
         using (var unused15 = new TempSetPlayerSettings(tiltOptions))
-        using (var unused13 = new TempSetOpenXrFeatureGroup(tiltOptions))
+        // using (var unused13 = new TempSetOpenXrFeatureGroup(tiltOptions))
         using (var unused9 = new RestoreFileContents(
             Path.Combine(Path.GetDirectoryName(Application.dataPath),
                 "ProjectSettings/GraphicsSettings.asset")))
