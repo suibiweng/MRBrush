@@ -1681,6 +1681,30 @@ namespace TiltBrush
             }
             else if (m_GrabWidgetState == GrabWidgetState.OneHand)
             {
+            //     var controller = InputManager.Controllers[(int)m_GrabWidgetOneHandInfo.m_Name];
+            //     bool shouldRelease = !App.Instance.IsInStateThatAllowsAnyGrabbing();
+            // if (!InputManager.Controllers[(int)m_GrabWidgetOneHandInfo.m_Name].GetControllerGrip() ||
+            //     shouldRelease)
+            // {
+            //     // if (shouldRelease)
+            //     // {
+            //     //     EatGrabInput();
+            //     // }
+
+            //     Vector3 vLinearVelocity;
+            //     Vector3 vAngularVelocity;
+            //     if (GetGrabWidgetHoldHistory(out vLinearVelocity, out vAngularVelocity))
+            //     {
+            //         rPrevGrabWidget.SetVelocities(
+            //             vLinearVelocity, vAngularVelocity,
+            //             controller.Transform.position);
+            //     }
+            //     // One -> None
+            //    // UpdateGrab_ToNone(rPrevGrabWidget);
+            // }
+
+
+
                 UpdateGrab_WasOneHand(rPrevGrabWidget);
             }
             else if (m_GrabWidgetState == GrabWidgetState.TwoHands)
@@ -1726,6 +1750,7 @@ namespace TiltBrush
             bool bWidgetManipOK = m_SketchSurfacePanel.DoesCurrentToolAllowWidgetManipulation() &&
                 !m_GrabWand.grabbingWorld && !m_GrabBrush.grabbingWorld && IsGrabWorldStateStable() &&
                 App.Instance.IsInStateThatAllowsAnyGrabbing();
+           
 
             // Update EatInput flags if they're valid.
             if (m_GrabBrush.eatInput)
@@ -1842,6 +1867,7 @@ namespace TiltBrush
 
         void UpdateGrab_WasOneHand(GrabWidget rPrevGrabWidget)
         {
+            
             var controller = InputManager.Controllers[(int)m_GrabWidgetOneHandInfo.m_Name];
             bool shouldRelease = !App.Instance.IsInStateThatAllowsAnyGrabbing();
             if (!InputManager.Controllers[(int)m_GrabWidgetOneHandInfo.m_Name].GetControllerGrip() ||
@@ -3537,6 +3563,7 @@ namespace TiltBrush
 
         public void AssignControllerMaterials(InputManager.ControllerName controller)
         {
+            return;
             ControllerGeometry geometry = InputManager.GetControllerGeometry(controller);
 
             // Start from a clean state

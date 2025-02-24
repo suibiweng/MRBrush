@@ -70,6 +70,9 @@ namespace TiltBrush
 
         [NonSerialized] public CanvasScript m_PreviousCanvas;
 
+
+         [SerializeField] private bool GrabableOnly = false;
+
         [SerializeField] private bool m_AllowTwoHandGrab = false;
         [SerializeField] private bool m_DestroyOnHide = false;
         [SerializeField] private bool m_AllowHideWithToss = false;
@@ -516,26 +519,26 @@ namespace TiltBrush
         }
 
         /// Returns true if we think the user intends to throw this thing away
-        bool IsHideToss(Vector3 vLinVel, Vector3 vAngVel, Vector3 vPivot)
-        {
-            if (m_Pinned || !m_AllowHideWithToss)
-            {
-                return false;
-            }
+        // bool IsHideToss(Vector3 vLinVel, Vector3 vAngVel, Vector3 vPivot)
+        // {
+        //     if (m_Pinned || !m_AllowHideWithToss)
+        //     {
+        //         return false;
+        //     }
+        //     if(!GrabableOnly){
+        //     var SCS = SketchControlsScript.m_Instance;
+        //     Vector3 vLinVelMeters = vLinVel * App.UNITS_TO_METERS;
 
-            var SCS = SketchControlsScript.m_Instance;
-            Vector3 vLinVelMeters = vLinVel * App.UNITS_TO_METERS;
+        //     // Add the component due to angular motion about a pivot
+        //     {
+        //         Vector3 r = (CenterOfMassTransform.position - vPivot) * App.UNITS_TO_METERS;
+        //         r = r.normalized * Mathf.Min(SCS.m_TossMaxPivotDistMeters, r.magnitude);
+        //         Vector3 omega = vAngVel * Mathf.Deg2Rad;
+        //         vLinVelMeters += Vector3.Cross(omega, r);
+        //     }}
 
-            // Add the component due to angular motion about a pivot
-            {
-                Vector3 r = (CenterOfMassTransform.position - vPivot) * App.UNITS_TO_METERS;
-                r = r.normalized * Mathf.Min(SCS.m_TossMaxPivotDistMeters, r.magnitude);
-                Vector3 omega = vAngVel * Mathf.Deg2Rad;
-                vLinVelMeters += Vector3.Cross(omega, r);
-            }
-
-            return vLinVelMeters.magnitude >= SCS.m_TossThresholdMeters;
-        }
+        //     return vLinVelMeters.magnitude >= SCS.m_TossThresholdMeters;
+        // }
 
         public void SetCanvas(CanvasScript newCanvas)
         {
@@ -610,11 +613,11 @@ namespace TiltBrush
         // vPivot: world-space position about which the angular velocity is applied
         public void SetVelocities(Vector3 vLinVel, Vector3 vAngVel, Vector3 vPivot)
         {
-            if (IsHideToss(vLinVel, vAngVel, vPivot))
-            {
-                StartHideToss(vLinVel, vAngVel, vPivot);
-                return;
-            }
+            // if (IsHideToss(vLinVel, vAngVel, vPivot))
+            // {
+            //     StartHideToss(vLinVel, vAngVel, vPivot);
+            //     return;
+            // }
 
             // Dropping widgets feels very strange if only one of the two
             // velocities is respected. But: in cases where only one of the speeds
@@ -1146,7 +1149,7 @@ namespace TiltBrush
             if (m_AllowSnapping)
             {
                 SnapEnabled = SelectionManager.m_Instance.AngleOrPositionSnapEnabled() &&
-                    SketchControlsScript.m_Instance.ShouldRespondToPadInput(m_InteractingController) &&
+                  !GrabableOnly  && SketchControlsScript.m_Instance.ShouldRespondToPadInput(m_InteractingController) &&
                     !m_Pinned;
 
                 if (!m_bWasSnapping && SnapEnabled)
@@ -1453,7 +1456,7 @@ namespace TiltBrush
             m_Pin.gameObject.SetActive(true);
             if (bPin)
             {
-                if (SketchControlsScript.m_Instance.IsUserGrabbingWidget(this))
+                if ( !GrabableOnly  && SketchControlsScript.m_Instance.IsUserGrabbingWidget(this))
                 {
                     m_Pin.PinWidget();
                 }
@@ -1896,7 +1899,7 @@ namespace TiltBrush
 
             // Because the user may be messing with the touchpad while holding a widget, eat input on the
             // pad when we're done here.  This prevents accidental tool resizing post-grab.
-            SketchControlsScript.m_Instance.EatToolScaleInput();
+         if(!GrabableOnly)   SketchControlsScript.m_Instance.EatToolScaleInput();
 
             // Give up two handed grabbing.
             SetUserTwoHandGrabbing(false);
