@@ -1880,7 +1880,7 @@ namespace TiltBrush
 
                 Vector3 vLinearVelocity;
                 Vector3 vAngularVelocity;
-                if (GetGrabWidgetHoldHistory(out vLinearVelocity, out vAngularVelocity))
+                if (GetGrabWidgetHoldHistory(out vLinearVelocity, out vAngularVelocity)&& rPrevGrabWidget!=null)
                 {
                     rPrevGrabWidget.SetVelocities(
                         vLinearVelocity, vAngularVelocity,
@@ -2263,7 +2263,7 @@ namespace TiltBrush
                 m_SketchSurfacePanel.ShouldShowPointer());
             RequestPanelsVisibility(true);
             m_SketchSurfacePanel.RequestHideActiveTool(false);
-            rPrevGrabWidget.UserInteracting(false);
+            if(rPrevGrabWidget!= null)rPrevGrabWidget.UserInteracting(false);
 
             // Disable grab visuals.
             m_ControllerGrabVisuals.SetDesiredVisualState(ControllerGrabVisuals.VisualState.Off);

@@ -417,6 +417,15 @@
       },
       "hash": "43697771ed65efee02d5b1743141b8179444c147"
     },
+    "jp.keijiro.klak.ndi": {
+      "version": "2.1.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.screencapture": "1.0.0"
+      },
+      "url": "https://registry.npmjs.com"
+    },
     "org.khronos.unitygltf": {
       "version": "https://github.com/icosa-mirror/UnityGLTF.git",
       "depth": 0,
