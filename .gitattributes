@@ -23,3 +23,5 @@ Assets/Prefabs/Intro/openbrush_intro_full.prefab filter=lfs diff=lfs merge=lfs -
 Assets/Resources/Resources[[:space:]]1/Cubemaps/milkyway.psd filter=lfs diff=lfs merge=lfs -text
 Support/ThirdParty/ffmpeg/bin/ffmpeg filter=lfs diff=lfs merge=lfs -text
 Assets/Prefabs/Intro/powered_by_tiltbrush_full.prefab filter=lfs diff=lfs merge=lfs -text
+Assets/Prefabs/Intro/*.prefab filter=lfs diff=lfs merge=lfs -text
+Assets/Resources/Resources[[:space:]]1/Cubemaps/*.psd filter=lfs diff=lfs merge=lfs -text
