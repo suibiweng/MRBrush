@@ -111,3 +111,4 @@ Packages/com.unity.xr.picoxr
 
 # Cache files
 *.cache
+*.apk

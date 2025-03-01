@@ -160,7 +160,7 @@ namespace TiltBrush
             var file = Resources.Load<Texture2D>(sourcePath.Substring(0, sourcePath.IndexOf('.')));
             try
             {
-                File.WriteAllBytes(targetPath, file.EncodeToPNG());
+                //File.WriteAllBytes(targetPath, file.EncodeToPNG());
             }
             catch (UnauthorizedAccessException)
             {

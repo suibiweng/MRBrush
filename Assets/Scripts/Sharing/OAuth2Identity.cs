@@ -103,9 +103,9 @@ namespace TiltBrush
 
         public bool IsGoogle => m_Service == SecretsConfig.Service.Google;
         public UserCredential UserCredential => m_CredentialRequest?.UserCredential;
-        private SecretsConfig.ServiceAuthData ServiceAuthData => App.Config.Secrets[m_Service];
-        public string ClientId => ServiceAuthData?.ClientId;
-        private string ClientSecret => ServiceAuthData?.ClientSecret;
+        //private SecretsConfig.ServiceAuthData ServiceAuthData => App.Config.Secrets[m_Service];
+       // public string ClientId => ServiceAuthData?.ClientId;
+      //  private string ClientSecret => ServiceAuthData?.ClientSecret;
 
         public UserInfo Profile
         {
@@ -143,12 +143,13 @@ namespace TiltBrush
         /// This is only public so it can be used in unit tests.
         public async Task InitializeAsync()
         {
-            if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret))
-            {
-                Debug.LogWarning(
-                    $"Attempted to initialize to {m_Service} with missing Client Id or Client Secret.");
-                return;
-            }
+            return;
+            // if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret))
+            // {
+            //     Debug.LogWarning(
+            //         $"Attempted to initialize to {m_Service} with missing Client Id or Client Secret.");
+            //     return;
+            // }
             m_TokenDataStore = new PlayerPrefsDataStore(m_TokenStorePrefix);
             var scopes = App.Config.IsMobileHardware
                 ? m_OAuthScopes
@@ -166,30 +167,30 @@ namespace TiltBrush
                     string.IsNullOrWhiteSpace(m_TokenServerUrl),
                     $"Both or neither of the server URLs must be set for {name}");
                 // Use Google authorization code flow.
-                m_CredentialRequest = new OAuth2CredentialRequest(
-                    new ClientSecrets
-                    {
-                        ClientId = ClientId,
-                        ClientSecret = ClientSecret,
-                    },
-                    scopes,
-                    m_CallbackPath,
-                    m_TokenDataStore);
+                // m_CredentialRequest = new OAuth2CredentialRequest(
+                //     new ClientSecrets
+                //     {
+                //         ClientId = ClientId,
+                //         ClientSecret = ClientSecret,
+                //     },
+                //     scopes,
+                //     m_CallbackPath,
+                //     m_TokenDataStore);
             }
             else
             {
                 // Use the generic authorization code.
-                m_CredentialRequest = new OAuth2CredentialRequest(
-                    new ClientSecrets
-                    {
-                        ClientId = ClientId,
-                        ClientSecret = ClientSecret,
-                    },
-                    scopes,
-                    m_CallbackPath,
-                    m_TokenDataStore,
-                    m_AuthorizationServerUrl,
-                    m_TokenServerUrl);
+                // m_CredentialRequest = new OAuth2CredentialRequest(
+                //     new ClientSecrets
+                //     {
+                //         ClientId = ClientId,
+                //         ClientSecret = ClientSecret,
+                //     },
+                //     scopes,
+                //     m_CallbackPath,
+                //     m_TokenDataStore,
+                //     m_AuthorizationServerUrl,
+                //     m_TokenServerUrl);
             }
 
             bool forTesting = !Application.isPlaying;
@@ -228,12 +229,13 @@ namespace TiltBrush
 
         public async void LoginAsync()
         {
-            if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret))
-            {
-                Debug.LogWarning(
-                    $"Attempted to log in to {m_Service} with missing Client Id or Client Secret.");
-                return;
-            }
+            return;
+            // if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret))
+            // {
+            //     Debug.LogWarning(
+            //         $"Attempted to log in to {m_Service} with missing Client Id or Client Secret.");
+            //     return;
+            // }
             await AuthorizeAsync();
             await GetUserInfoAsync();
             if (LoggedIn)

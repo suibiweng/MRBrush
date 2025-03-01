@@ -3,7 +3,19 @@ guid: 56c9d54fea1974f4daeb40bbb52c13f6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - manager: {instanceID: 0}
+  - promptText: {instanceID: 0}
+  - Target: {instanceID: 0}
+  - modelDownloader: {instanceID: 0}
+  - fast3DFunctions: {instanceID: 0}
+  - boundBox: {instanceID: 0}
+  - _grabbable: {instanceID: 0}
+  - debugShow: {instanceID: 0}
+  - DebugMsg: {instanceID: 0}
+  - voiceLabel: {instanceID: 0}
+  - drawingSystem: {instanceID: 0}
+  - thePresetShader: {fileID: 4800000, guid: 6f30a22c6f04445848a37c7c7e922cff, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

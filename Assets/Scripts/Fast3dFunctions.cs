@@ -27,7 +27,9 @@ public class Fast3dFunctions : MonoBehaviour
             InitCameraMask();
         displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
 
-      //  StartCapture();
+    StartCapture();
+
+    // ToggleCullingMask();
        
 
     
@@ -188,7 +190,7 @@ void InitCameraMask(){
         if (streamingTexture == null)
         {
             Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
-            return;
+        
         }
 
         StartCoroutine(UploadPNG(streamingTexture, url, filename,"",false,0,objPosition,false,"IP_RGB",urlid));

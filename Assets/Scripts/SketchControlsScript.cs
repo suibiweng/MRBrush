@@ -4568,8 +4568,8 @@ namespace TiltBrush
                 case GlobalCommands.AccountInfo: break; // Intentionally blank.
                 case GlobalCommands.LoginToGenericCloud:
                     {
-                        var ident = App.GetIdentity((Cloud)iParam1);
-                        if (!ident.LoggedIn) { ident.LoginAsync(); }
+                        // var ident = App.GetIdentity((Cloud)iParam1);
+                        // if (!ident.LoggedIn) { ident.LoginAsync(); }
                         // iParam2 is being used as a UX flag.  If not set to the default, it will cause the UI
                         // to lose focus.
                         if (iParam2 != -1) { EatGazeObjectInput(); }
@@ -4577,22 +4577,22 @@ namespace TiltBrush
                     }
                 case GlobalCommands.LogOutOfGenericCloud:
                     {
-                        var ident = App.GetIdentity((Cloud)iParam1);
-                        if (ident.LoggedIn) { ident.Logout(); }
+                        // var ident = App.GetIdentity((Cloud)iParam1);
+                        // if (ident.LoggedIn) { ident.Logout(); }
                         break;
                     }
                 case GlobalCommands.UploadToGenericCloud:
                     {
                         Cloud cloud = (Cloud)iParam1;
-                        var ident = App.GetIdentity(cloud);
-                        if (!ident.LoggedIn)
-                        {
-                            ident.LoginAsync();
-                            break;
-                        }
-                        SelectionManager.m_Instance.ClearActiveSelection();
-                        VrAssetService.m_Instance.UploadCurrentSketchAsync(cloud, isDemoUpload: false).AsAsyncVoid();
-                        EatGazeObjectInput();
+                        // var ident = App.GetIdentity(cloud);
+                        // if (!ident.LoggedIn)
+                        // {
+                        //     ident.LoginAsync();
+                        //     break;
+                        // }
+                        // SelectionManager.m_Instance.ClearActiveSelection();
+                        // VrAssetService.m_Instance.UploadCurrentSketchAsync(cloud, isDemoUpload: false).AsAsyncVoid();
+                        // EatGazeObjectInput();
                         break;
                     }
                 case GlobalCommands.ViewOnlineGallery:

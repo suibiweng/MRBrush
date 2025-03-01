@@ -50,6 +50,8 @@ public class ReConstructSpot : MonoBehaviour
 
   public DrawingSystem drawingSystem;
 
+  public Shader thePresetShader;
+
    
 
     void Start()
@@ -62,7 +64,7 @@ public class ReConstructSpot : MonoBehaviour
         UploadURL=manager.ServerURL;
         commandURL=manager.ServerURL;
    //     DownloadURL+=":"+manager.downloadPort+"/";
-        DownloadURL+=":"+manager.Port+"/download";
+        DownloadURL+=":"+"8000/";
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
@@ -108,25 +110,25 @@ public class ReConstructSpot : MonoBehaviour
         debugShow.isOn = isselsected;
 
 
-         if(Input.GetKeyDown(KeyCode.A)){
+        //  if(Input.GetKeyDown(KeyCode.A)){
 
-            StartGeneration();
+        //     StartGeneration();
 
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.B)){
-
-          modifywithPrompt();
-
-        }
+        // }
 
 
-        if(Input.GetKeyDown(KeyCode.C)){
+        // if(Input.GetKeyDown(KeyCode.B)){
 
-           FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "202501251810407ce9bb9f" + "_reconstruct.zip"));
+        //   modifywithPrompt();
 
-        }
+        // }
+
+
+        // if(Input.GetKeyDown(KeyCode.C)){
+
+        //    FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "202501251810407ce9bb9f" + "_reconstruct.zip"));
+
+        // }
 
 
         if(isselsected){
@@ -178,7 +180,7 @@ public class ReConstructSpot : MonoBehaviour
 
              //material.shader = Shader.Find("Unlit/Texture"); 
 
-             material.shader = Shader.Find("VertexColor");
+             material.shader = thePresetShader;
 
 
         }
@@ -363,7 +365,7 @@ bool Capturing=false;
          //yield return new WaitForSeconds(0.3f);
         //fast3DFunctions.CaptureDepth(UploadURL,URLID+"_Depth.png",TargetPos,URLID);
         yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.ToggleCullingMask();
+       fast3DFunctions.ToggleCullingMask();
         if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL +"/"+ URLID + "_reconstruct.zip"));
 
