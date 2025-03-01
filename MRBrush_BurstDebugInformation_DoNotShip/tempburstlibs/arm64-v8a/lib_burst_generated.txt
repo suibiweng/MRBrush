@@ -1,4 +1,4 @@
-Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+Library: D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --platform=Android
 --backend=burst-llvm-16
 --target=ARMV8A_AARCH64
@@ -7,11 +7,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[GLTFast.Jobs.ConvertUVsFloatToFloatInterleavedJob, glTFast, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(GLTFast.Jobs.ConvertUVsFloatToFloatInterleavedJob&, glTFast, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--5c7db452ab5796006eecfe194a0df4b9

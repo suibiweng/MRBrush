@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.ixxy.unitysymmetry": "https://github.com/IxxyXR/unity-symmetry.git?nocache=7#upm",
+    "com.meta.xr.depthapi": "https://github.com/oculus-samples/Unity-DepthAPI.git?path=/Packages/com.meta.xr.depthapi",
     "com.meta.xr.mrutilitykit": "72.0.0",
     "com.meta.xr.sdk.core": "72.0",
     "com.meta.xr.sdk.interaction.ovr": "72.0.0",
@@ -30,7 +31,6 @@
     "com.unity.xr.core-utils": "2.3.0",
     "com.unity.xr.management": "4.4.1",
     "com.unity.xr.oculus": "4.2.0",
-    "com.unity.xr.openxr": "1.11.0",
     "com.zappar.xr.zapbox": "https://github.com/zappar-xr/zapbox-xr-sdk.git#43697771ed65efee02d5b1743141b8179444c147",
     "jp.keijiro.klak.ndi": "2.1.4",
     "org.khronos.unitygltf": "https://github.com/icosa-mirror/UnityGLTF.git",
