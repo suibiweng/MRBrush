@@ -58,6 +58,10 @@ namespace TiltBrush
         {
             Debug.Assert((int)m_Wand.ControllerName == 0);
             Debug.Assert((int)m_Brush.ControllerName == 1);
+
+        
+
+
             // The array is indexed by ControllerName, so the order here is important!
             return new BaseControllerBehavior[] { m_Wand, m_Brush };
         }

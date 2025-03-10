@@ -24,10 +24,9 @@ public class Fast3dFunctions : MonoBehaviour
     public DisplayCaptureManager displayCaptureManager;
 
     void Start() {
-            InitCameraMask();
+        InitCameraMask();
         displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
-
-    StartCapture();
+        StartCapture();
 
     // ToggleCullingMask();
        
@@ -153,18 +152,18 @@ void InitCameraMask(){
 
     }
 
-    public void StopCapture(){
-
+    public void StopCapture()
+    {
 
         displayCaptureManager.StopScreenCapture();
 
 
     }
 
-    public void sendCommand(string url,string command ,string urlid)
+    public void sendCommand(string url,string command ,string urlid,string Prompt)
     {
 
-        StartCoroutine(SendtheCommand(url,command,urlid));
+        StartCoroutine(SendtheCommand(url,command,urlid,Prompt));
 
 
 
@@ -207,6 +206,37 @@ void InitCameraMask(){
 
         StartCoroutine(UploadPNG(streamingTexture, url, filename,"",false,0,objPosition,false,"RGB_modify",urlid));
     }
+
+
+    public void DreamMesh(string url,string urlid,string Prompt){
+
+
+        StartCoroutine(SendtheCommand( url,"ShapeE",urlid,Prompt));
+
+
+
+    }
+
+
+
+
+
+
+        public void ChangeMaterial(string url,string urlid,string Prompt)
+        {
+
+
+
+            StartCoroutine(SendtheCommand( url,"ChangeTexture",urlid,Prompt));
+
+
+
+
+
+
+
+
+        }
 
 
     // Capture and upload the current streaming texture with a custom filename
@@ -281,7 +311,7 @@ public IEnumerator UploadPNG(Texture2D texture, string url, string filename, str
 }
 
 
-public IEnumerator SendtheCommand( string url,string command ,string urlid)
+public IEnumerator SendtheCommand( string url,string command ,string urlid,string prompt)
 {
     
     if (command != "")
@@ -290,6 +320,7 @@ public IEnumerator SendtheCommand( string url,string command ,string urlid)
 
         form.AddField("Command", command);
         form.AddField("URLID",urlid);
+        form.AddField("Prompt",prompt);
 
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();

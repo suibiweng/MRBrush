@@ -123,6 +123,7 @@ namespace TiltBrush
         void Awake()
         {
             m_CurrentGripState = GripState.Standard;
+        
         }
 
         void Update()

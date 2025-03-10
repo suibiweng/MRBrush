@@ -8,9 +8,27 @@ using TMPro;
 using UnityEngine.UI;
 using DimBoxes;
 using Oculus.Interaction;
+using Klak.Ndi.Interop;
+public enum PromptType{
+    DreamMesh,
+    Material,
+    Drawing,
+    Reconstruction
+}
+
+
 
 public class ReConstructSpot : MonoBehaviour
 {
+
+
+    public ToggleGroup PromptModes;
+    
+    public PromptType promptType;
+    
+    public int Version;
+
+    public List<string> versionIds;
 
     public RealityEditorManager manager;
 
@@ -52,10 +70,13 @@ public class ReConstructSpot : MonoBehaviour
 
   public Shader thePresetShader;
 
+
    
 
     void Start()
     {
+       
+        versionIds=new List<string>();
         drawingSystem=  FindObjectOfType<DrawingSystem>();
         manager = FindObjectOfType<RealityEditorManager>();
         modelDownloader = FindObjectOfType<ModelDownloader>();
@@ -68,7 +89,7 @@ public class ReConstructSpot : MonoBehaviour
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
-        
+         Version=0;
     }
 
 
@@ -101,11 +122,84 @@ public class ReConstructSpot : MonoBehaviour
         }
     }
 
+
+
+    void UIsetup(){
+         switch(PromptModes.GetFirstActiveToggle().name){
+            case "DreamMesh":
+               promptType=PromptType.DreamMesh;
+            break;
+
+
+            case "MaterialChanger":
+             promptType=PromptType.Material;
+            break ;
+
+
+            case "Drawing":
+             promptType=PromptType.Drawing;
+            break;
+
+            case "Reconstruct":
+
+             promptType=PromptType.Reconstruction;
+
+             break;
+
+         }
+
+
+    }
+
+
+
+    public void SendThePrompt(){
+
+        switch (promptType){
+
+            case PromptType.DreamMesh:
+
+
+
+            break;
+
+            case PromptType.Drawing:
+            break;
+
+
+
+            case PromptType.Material:
+            break;
+
+
+
+
+            case PromptType.Reconstruction:
+                
+            break;
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+    }
+
     
 
     // Update is called once per frame
     void Update()
     {
+
+        UIsetup();
+
         if(debugShow!=null)
         debugShow.isOn = isselsected;
 
@@ -189,11 +283,9 @@ public class ReConstructSpot : MonoBehaviour
 
         Preseting=true;
 
-
-
-
-
     }
+
+
 
 
 
@@ -273,6 +365,59 @@ Vector2 ObjectScreenPosition()
 
 bool Capturing=false;
 
+
+public void CreateDreamMesh(){
+
+    fast3DFunctions.DreamMesh(UploadURL,URLID+"@"+Version,prompt);
+         if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapeE.zip"));
+
+}
+
+
+public void ReconstructionTheModel(){
+
+    StartGeneration();
+
+
+
+}
+
+public void ChangeMaterial(){
+
+
+        //if(!Target.isEmpty)      
+
+        fast3DFunctions.ChangeMaterial(UploadURL,URLID+"@"+Version,prompt);
+
+         if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Texture.zip"));
+
+
+
+
+}
+
+
+public void DrawingToModel(){
+
+
+
+     modifywithPrompt();
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
     public void StartGeneration(){
 
         if(!isselsected) return;
@@ -313,6 +458,20 @@ bool Capturing=false;
 
 
 
+
+
+        public void sendingPrompt(){
+
+
+
+
+
+        }
+
+
+
+
+
         IEnumerator MaskWithPrompt(){
      //prompt=promptText.text;
 
@@ -325,10 +484,10 @@ bool Capturing=false;
         Vector2 TargetPos =ObjectScreenPosition();
         fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
-       fast3DFunctions.ModifyCapture(UploadURL,URLID+".png",TargetPos,URLID);
+       fast3DFunctions.ModifyCapture(UploadURL,URLID+".png",TargetPos,URLID+"@"+Version);
         
         yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.UploadMask(UploadURL,URLID+"_Mask.png",prompt,TargetPos,URLID); 
+        fast3DFunctions.UploadMask(UploadURL,URLID+"@"+Version+"_Mask.png",prompt,TargetPos,URLID); 
 
           
          //yield return new WaitForSeconds(0.3f);
@@ -336,7 +495,7 @@ bool Capturing=false;
         yield return new WaitForSeconds(0.3f);
         fast3DFunctions.ToggleCullingMask();
         if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID + "_reconstruct.zip"));
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_reconstruct.zip"));
         drawingSystem.ClearAndDestroyStackObjects();
 
         Capturing=false;
@@ -356,7 +515,7 @@ bool Capturing=false;
         Vector2 TargetPos =ObjectScreenPosition();
         fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.Capture(UploadURL,URLID+".png",TargetPos,URLID);
+        fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID);
 
 
        // fast3DFunctions.sendCommand(commandURL,"IpcamCapture",URLID);
@@ -367,7 +526,7 @@ bool Capturing=false;
         yield return new WaitForSeconds(0.3f);
        fast3DFunctions.ToggleCullingMask();
         if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL +"/"+ URLID + "_reconstruct.zip"));
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL +"/"+ URLID+"@"+Version + "_reconstruct.zip"));
 
 
         Capturing=false;
@@ -382,7 +541,19 @@ bool Capturing=false;
 
     public void Delete(){
 
-        manager.RemoveReConSpot(URLID);
+      //  manager.RemoveReConSpot(URLID);
+
+
+    }
+
+
+
+    public void ChangeTheMaterial(){
+
+
+
+        if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL +"/"+ URLID+"@"+Version + "_Modify.zip"));
 
 
     }
@@ -452,6 +623,7 @@ bool Capturing=false;
             FileCheck=null;
 
             downloadModel(url, Target);
+            Version++;
 
 
 
