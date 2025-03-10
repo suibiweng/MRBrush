@@ -104,9 +104,9 @@ public class RealityEditorManager : MonoBehaviour
         // if(OVRInput.GetUp(OVRInput.RawButton.X)){
         //     createSpot(LeftHand.position);
         // }
-        // if(Input.GetKeyDown(KeyCode.Space)){
-        //         createReconsroctSpot();
-        // }
+        if(Input.GetKeyDown(KeyCode.Space)){
+                createReconsroctSpot();
+        }
         // if(Input.GetKeyDown(KeyCode.S)){
         //     SceneSaverTest.SaveGenerateSpotsToPlayerPrefs();
         // }

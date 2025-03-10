@@ -19013,6 +19013,8 @@ MonoBehaviour:
   voiceLabel: {fileID: 2789892756203510895}
   drawingSystem: {fileID: 0}
   thePresetShader: {fileID: 4800000, guid: 6f30a22c6f04445848a37c7c7e922cff, type: 3}
+  debugPrompt: a Red Apple
+  ObjectsVersion: []
   checkInterval: 5
 --- !u!114 &3730410076782256520
 MonoBehaviour:

@@ -21,6 +21,12 @@ public enum PromptType{
 public class ReConstructSpot : MonoBehaviour
 {
 
+    //Version ControlUI
+    public TMP_Text VersionInfoText;
+    
+    
+
+
 
     public ToggleGroup PromptModes;
     
@@ -49,6 +55,10 @@ public class ReConstructSpot : MonoBehaviour
     // Start is called before the first frame update
 
 
+
+    public ParticleSystem loadingParticles;
+
+
    Coroutine FileCheck;
 
    public string DownloadURL="";
@@ -70,11 +80,16 @@ public class ReConstructSpot : MonoBehaviour
 
   public Shader thePresetShader;
 
+  public string debugPrompt="Red Apple";
 
-   
+   public List<GameObject> ObjectsVersion ;
 
     void Start()
     {
+
+        ObjectsVersion= new List<GameObject>();
+
+
        
         versionIds=new List<string>();
         drawingSystem=  FindObjectOfType<DrawingSystem>();
@@ -84,7 +99,7 @@ public class ReConstructSpot : MonoBehaviour
         DownloadURL=manager.ServerURL;
         UploadURL=manager.ServerURL;
         commandURL=manager.ServerURL;
-   //     DownloadURL+=":"+manager.downloadPort+"/";
+        //DownloadURL+=":"+manager.downloadPort+"/";
         DownloadURL+=":"+"8000/";
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
@@ -93,9 +108,107 @@ public class ReConstructSpot : MonoBehaviour
     }
 
 
+   
+
+
+    void ObjectListUpdate(){
+
+        // if there is no new object in the list, return
+    if (ObjectsVersion.Count == Target.transform.childCount) return;
+    else{
+        //deavtivate the previous object
+        foreach (GameObject obj in ObjectsVersion)
+        {
+            obj.SetActive(false);
+        }
+
+    }
+
+
+
+
+    if(VersionInfoText!=null) 
+
+    VersionInfoText.text="Version: "+currentVersion+"(Total Version:)"+ObjectsVersion.Count;
+
+    currentVersion=Version;
+
+
+        // add the object not in the list and 
+    foreach (Transform child in Target.transform)
+    {
+            if(!ObjectsVersion.Contains(child.gameObject))
+            ObjectsVersion.Add(child.gameObject);
+       
+       
+       
+   
+    }
+
+         if(loadingParticles!=null)
+        loadingParticles.Stop();
+
+
+    // Shaer change on the new object
+    foreach (GameObject obj in ObjectsVersion)
+    {
+        Material [] materials = obj.GetComponentInChildren<MeshRenderer>().materials;
+
+        foreach (Material material in materials){
+
+             material.shader = thePresetShader;     
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    //
+    int currentVersion=0;
+    public void PreviousVersion(){
+        if(VersionInfoText!=null) 
+        VersionInfoText.text="Version: "+currentVersion+"(Total Version:)"+ObjectsVersion.Count;
+        //activate the previous object
+        if (Version > 0)
+        {
+            ObjectsVersion[currentVersion].SetActive(false);
+            currentVersion--;
+            ObjectsVersion[currentVersion].SetActive(true);
+        }
+    }
+
+    //
+    public void NextVersion(){
+
+        if(VersionInfoText!=null) 
+
+        VersionInfoText.text="Version: "+currentVersion+"(Total Version:)"+ObjectsVersion.Count;
+        //activate the next object
+        if (Version < ObjectsVersion.Count - 1)
+        {
+            ObjectsVersion[currentVersion].SetActive(false);
+            currentVersion++;
+            ObjectsVersion[currentVersion].SetActive(true);
+        }
+
+
+    }
+
+
 
   public void ClearAllChildren()
     {
+        return;
         GameObject parentObject=Target;
         Preseting=false;
         // Check if the parentObject is assigned
@@ -125,6 +238,9 @@ public class ReConstructSpot : MonoBehaviour
 
 
     void UIsetup(){
+        if(PromptModes==null) return;
+
+
          switch(PromptModes.GetFirstActiveToggle().name){
             case "DreamMesh":
                promptType=PromptType.DreamMesh;
@@ -154,28 +270,26 @@ public class ReConstructSpot : MonoBehaviour
 
 
     public void SendThePrompt(){
+        if(loadingParticles!=null)
+            loadingParticles.Play();
 
         switch (promptType){
-
             case PromptType.DreamMesh:
-
-
-
+                CreateDreamMesh();
             break;
 
             case PromptType.Drawing:
+            DrawingToModel();
             break;
 
 
 
             case PromptType.Material:
+            ChangeMaterial();
             break;
 
-
-
-
             case PromptType.Reconstruction:
-                
+            ReconstructionTheModel();
             break;
 
 
@@ -204,46 +318,28 @@ public class ReConstructSpot : MonoBehaviour
         debugShow.isOn = isselsected;
 
 
-        //  if(Input.GetKeyDown(KeyCode.A)){
+         if(Input.GetKeyDown(KeyCode.A)){
 
-        //     StartGeneration();
-
-        // }
-
-
-        // if(Input.GetKeyDown(KeyCode.B)){
-
-        //   modifywithPrompt();
-
-        // }
-
-
-        // if(Input.GetKeyDown(KeyCode.C)){
-
-        //    FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "202501251810407ce9bb9f" + "_reconstruct.zip"));
-
-        // }
-
-
-        if(isselsected){
-
-        if(OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)){
-
-            StartGeneration();
+            prompt= debugPrompt;
+            CreateDreamMesh();
+            // StartGeneration();
 
         }
 
 
-        }
-
-
-        if(Target.transform.childCount>0){
-
-            PresetTheDownloadedModel();
 
 
 
-        }
+
+
+       
+            ObjectListUpdate();
+
+            // PresetTheDownloadedModel();
+
+
+
+        
 
     
 
@@ -271,8 +367,6 @@ public class ReConstructSpot : MonoBehaviour
         Material [] materials = Target.GetComponentInChildren<MeshRenderer>().materials;
 
         foreach (Material material in materials){
-
-             //material.shader = Shader.Find("Unlit/Texture"); 
 
              material.shader = thePresetShader;
 
@@ -368,9 +462,9 @@ bool Capturing=false;
 
 public void CreateDreamMesh(){
 
-    fast3DFunctions.DreamMesh(UploadURL,URLID+"@"+Version,prompt);
+    fast3DFunctions.DreamMesh(commandURL,URLID+"@"+Version,prompt);
          if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapeE.zip"));
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
 
 }
 
@@ -386,7 +480,6 @@ public void ReconstructionTheModel(){
 public void ChangeMaterial(){
 
 
-        //if(!Target.isEmpty)      
 
         fast3DFunctions.ChangeMaterial(UploadURL,URLID+"@"+Version,prompt);
 
@@ -448,19 +541,6 @@ public void DrawingToModel(){
 
 
 
-
-
-
-
-
-        }
-
-
-
-
-
-
-        public void sendingPrompt(){
 
 
 
