@@ -262,6 +262,8 @@ public class ReConstructSpot : MonoBehaviour
 
              break;
 
+
+
          }
 
 
@@ -312,19 +314,18 @@ public class ReConstructSpot : MonoBehaviour
     void Update()
     {
 
-        UIsetup();
-
+    
         if(debugShow!=null)
         debugShow.isOn = isselsected;
 
 
-         if(Input.GetKeyDown(KeyCode.A)){
+        //  if(Input.GetKeyDown(KeyCode.A)){
 
-            prompt= debugPrompt;
-            CreateDreamMesh();
-            // StartGeneration();
+        //     prompt= debugPrompt;
+        //     CreateDreamMesh();
+        //     // StartGeneration();
 
-        }
+        // }
 
 
 
@@ -351,6 +352,9 @@ public class ReConstructSpot : MonoBehaviour
         
         prompt=promptText.text;
         DebugMsg.text=prompt;
+
+        UIsetup();
+
 
 
 

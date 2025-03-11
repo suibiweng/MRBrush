@@ -18990,6 +18990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c9d54fea1974f4daeb40bbb52c13f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VersionInfoText: {fileID: 0}
   PromptModes: {fileID: 0}
   promptType: 0
   Version: 0
@@ -19002,6 +19003,7 @@ MonoBehaviour:
   fast3DFunctions: {fileID: 0}
   URLID: 
   serverURL: 
+  loadingParticles: {fileID: 0}
   DownloadURL: 
   UploadURL: 
   commandURL: 

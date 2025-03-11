@@ -109,7 +109,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 6088013698079013677}
   toggleTransition: 1
   graphic: {fileID: 8802941327496732047}
@@ -20201,7 +20201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2495347327288587552}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6889295, z: -0, w: -0.72482836}
+  m_LocalRotation: {x: -0, y: -0.6889306, z: 0, w: -0.72482747}
   m_LocalPosition: {x: 4.54, y: 4.77, z: -12.07}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -20343,7 +20343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VersionInfoText: {fileID: 4966346079621656513}
-  PromptModes: {fileID: 204035679256622038}
+  PromptModes: {fileID: 0}
   promptType: 0
   Version: 0
   versionIds: []
@@ -69746,7 +69746,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 6896769803787574273}
   toggleTransition: 1
   graphic: {fileID: 5146140501974709814}
