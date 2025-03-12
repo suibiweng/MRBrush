@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using DimBoxes;
 using Oculus.Interaction;
 using Klak.Ndi.Interop;
+using System.Drawing;
+
 public enum PromptType{
     DreamMesh,
     Material,
@@ -23,6 +25,10 @@ public class ReConstructSpot : MonoBehaviour
 
     //Version ControlUI
     public TMP_Text VersionInfoText;
+
+    public Slider SizeAdjustment;
+    public Slider TransparentAdjustment;
+
     
     
 
@@ -140,9 +146,6 @@ public class ReConstructSpot : MonoBehaviour
             if(!ObjectsVersion.Contains(child.gameObject))
             ObjectsVersion.Add(child.gameObject);
        
-       
-       
-   
     }
 
          if(loadingParticles!=null)
@@ -173,15 +176,26 @@ public class ReConstructSpot : MonoBehaviour
 
 
     }
+
+
+    void turnoffall(){
+        foreach(var obj in ObjectsVersion){
+
+            obj.SetActive(false);
+
+
+        }
+    }
     //
     int currentVersion=0;
     public void PreviousVersion(){
         if(VersionInfoText!=null) 
         VersionInfoText.text="Version: "+currentVersion+"(Total Version:)"+ObjectsVersion.Count;
+        turnoffall();
         //activate the previous object
-        if (Version > 0)
+        if (currentVersion > 0)
         {
-            ObjectsVersion[currentVersion].SetActive(false);
+           
             currentVersion--;
             ObjectsVersion[currentVersion].SetActive(true);
         }
@@ -193,10 +207,16 @@ public class ReConstructSpot : MonoBehaviour
         if(VersionInfoText!=null) 
 
         VersionInfoText.text="Version: "+currentVersion+"(Total Version:)"+ObjectsVersion.Count;
+
+         turnoffall();
+
+
+
+
         //activate the next object
-        if (Version < ObjectsVersion.Count - 1)
+        if (currentVersion < ObjectsVersion.Count - 1)
         {
-            ObjectsVersion[currentVersion].SetActive(false);
+
             currentVersion++;
             ObjectsVersion[currentVersion].SetActive(true);
         }
@@ -308,15 +328,45 @@ public class ReConstructSpot : MonoBehaviour
 
     }
 
+    public void TransformUpdate(){
+
+
+         
+         if(SizeAdjustment==null)return;
+
+
+          Target.transform.localScale=new Vector3(1f+SizeAdjustment.value,1f+SizeAdjustment.value,1f+SizeAdjustment.value);
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
     
 
     // Update is called once per frame
     void Update()
     {
 
+
+
+        TransformUpdate();
+
     
         if(debugShow!=null)
         debugShow.isOn = isselsected;
+
+
+
+
 
 
         //  if(Input.GetKeyDown(KeyCode.A)){
@@ -334,7 +384,7 @@ public class ReConstructSpot : MonoBehaviour
 
 
        
-            ObjectListUpdate();
+        ObjectListUpdate();
 
             // PresetTheDownloadedModel();
 
@@ -599,7 +649,7 @@ public void DrawingToModel(){
         Vector2 TargetPos =ObjectScreenPosition();
         fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID);
+        fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID+"@"+Version);
 
 
        // fast3DFunctions.sendCommand(commandURL,"IpcamCapture",URLID);

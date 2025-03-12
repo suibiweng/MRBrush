@@ -18991,6 +18991,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VersionInfoText: {fileID: 0}
+  SizeAdjustment: {fileID: 0}
+  TransparentAdjustment: {fileID: 0}
   PromptModes: {fileID: 0}
   promptType: 0
   Version: 0
