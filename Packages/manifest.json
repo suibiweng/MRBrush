@@ -3,6 +3,7 @@
     "com.ixxy.unitysymmetry": "https://github.com/IxxyXR/unity-symmetry.git?nocache=7#upm",
     "com.meta.xr.depthapi": "https://github.com/oculus-samples/Unity-DepthAPI.git?path=/Packages/com.meta.xr.depthapi",
     "com.meta.xr.mrutilitykit": "72.0.0",
+    "com.unity.sentis": "2.1.1",
     "com.meta.xr.sdk.core": "72.0",
     "com.meta.xr.sdk.interaction.ovr": "72.0.0",
     "com.meta.xr.sdk.platform": "72.0.0",

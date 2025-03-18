@@ -5,9 +5,12 @@ using Anaglyph.DisplayCapture;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Android;
+using PassthroughCameraSamples;
 
 public class Fast3dFunctions : MonoBehaviour
 {
+
+    public RawImage CapturePreview;
 
     public Camera MaskCamera;
 
@@ -21,14 +24,21 @@ public class Fast3dFunctions : MonoBehaviour
     public static Texture2D streamingTexture;
     public RenderTexture Mask,Depth;
 
-    public DisplayCaptureManager displayCaptureManager;
+    public WebCamTextureManager webCamTextureManager;
+
+    //public DisplayCaptureManager displayCaptureManager;
+
+     Texture2D  updatetexture2D;
 
     void Start() {
         InitCameraMask();
-        displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
-        StartCapture();
+        //displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
+       // StartCapture();
 
     // ToggleCullingMask();
+
+
+    updatetexture2D = new Texture2D(webCamTextureManager.WebCamTexture.width, webCamTextureManager.WebCamTexture.height, TextureFormat.RGBA32, false);
        
 
     
@@ -133,21 +143,30 @@ void InitCameraMask(){
 
 
     void Update() {
-              if(OVRInput.GetUp(OVRInput.RawButton.A)){
-                 ToggleCullingMask();
-          
-        }
+      
+        // Graphics.CopyTexture(webCamTextureManager.WebCamTexture, updatetexture2D);
+        // UpdateTexture(updatetexture2D);
 
+        CapturePreview.texture=webCamTextureManager.WebCamTexture;
 
 
     }
+
+
+    public Texture2D Convert_WebCamTexture_To_Texture2d(WebCamTexture _webCamTexture)
+        {
+        Texture2D _texture2D = new Texture2D(_webCamTexture.width, _webCamTexture.height);
+        _texture2D.SetPixels32(_webCamTexture.GetPixels32());
+
+        return _texture2D;
+        }
 
 
 
 
     public void StartCapture(){
 
-        displayCaptureManager.StartScreenCapture();
+    //    displayCaptureManager.StartScreenCapture();
 
 
     }
@@ -155,7 +174,7 @@ void InitCameraMask(){
     public void StopCapture()
     {
 
-        displayCaptureManager.StopScreenCapture();
+     //   displayCaptureManager.StopScreenCapture();
 
 
     }
@@ -186,11 +205,13 @@ void InitCameraMask(){
 
     public void CaptureIpCam(string url, string filename,Vector2 objPosition,string urlid)
     {
+        streamingTexture=Convert_WebCamTexture_To_Texture2d(webCamTextureManager.WebCamTexture);
         if (streamingTexture == null)
         {
             Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
         
         }
+         
 
         StartCoroutine(UploadPNG(streamingTexture, url, filename,"",false,0,objPosition,false,"IP_RGB",urlid));
     }
@@ -198,6 +219,8 @@ void InitCameraMask(){
 
     public void ModifyCapture(string url, string filename,Vector2 objPosition,string urlid)
     {
+        streamingTexture=Convert_WebCamTexture_To_Texture2d(webCamTextureManager.WebCamTexture);
+        
         if (streamingTexture == null)
         {
             Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
@@ -241,7 +264,11 @@ void InitCameraMask(){
 
     // Capture and upload the current streaming texture with a custom filename
     public void Capture(string url, string filename,Vector2 objPosition,string urlid)
+
+    
     {
+
+        streamingTexture=Convert_WebCamTexture_To_Texture2d(webCamTextureManager.WebCamTexture);
         if (streamingTexture == null)
         {
             Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
