@@ -184,7 +184,7 @@ void InitCameraMask(){
 
 
 
-        public void CaptureIpCam(string url, string filename,Vector2 objPosition,string urlid)
+    public void CaptureIpCam(string url, string filename,Vector2 objPosition,string urlid)
     {
         if (streamingTexture == null)
         {
@@ -196,7 +196,7 @@ void InitCameraMask(){
     }
 
 
-        public void ModifyCapture(string url, string filename,Vector2 objPosition,string urlid)
+    public void ModifyCapture(string url, string filename,Vector2 objPosition,string urlid)
     {
         if (streamingTexture == null)
         {

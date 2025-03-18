@@ -56,6 +56,20 @@ public class RealityEditorManager : MonoBehaviour
     }
 
 
+    public GameObject GetSelected(){
+
+        if(ReConSpotDic.ContainsKey(selectedIDUrl))
+
+        return ReConSpotDic[selectedIDUrl];
+
+
+        else return null;
+
+
+
+    }
+
+
     public void updateSelected(string IDurl)
     {
 

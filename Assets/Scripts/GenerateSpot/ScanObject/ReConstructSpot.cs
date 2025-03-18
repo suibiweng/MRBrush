@@ -90,6 +90,8 @@ public class ReConstructSpot : MonoBehaviour
 
    public List<GameObject> ObjectsVersion ;
 
+   private bool TextureChanging=false;
+
     void Start()
     {
 
@@ -110,7 +112,40 @@ public class ReConstructSpot : MonoBehaviour
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
-         Version=0;
+        Version=0;
+
+        StartCoroutine(StrokeAttach());
+    
+    
+    
+    }
+
+
+
+
+    IEnumerator StrokeAttach()
+    {
+
+        // if( promptType!=PromptType.Drawing)  yield return null;
+        
+
+        yield return new WaitForSeconds(0.5f); // Small delay to allow object instantiation
+
+    if(isselsected){
+
+  
+        GameObject targetObject = GameObject.FindWithTag("Stroke");
+        if (targetObject != null)
+        {
+
+            targetObject.transform.SetParent(Target.transform,true);
+            Debug.Log("Object attached successfully.");
+        }
+
+
+
+          }
+
     }
 
 
@@ -145,13 +180,23 @@ public class ReConstructSpot : MonoBehaviour
     {
             if(!ObjectsVersion.Contains(child.gameObject))
             ObjectsVersion.Add(child.gameObject);
+            if(!TextureChanging)
+                child.gameObject.GetComponentInChildren<MeshRenderer>().material.shader=thePresetShader;
+
+
+
+
+
+
        
     }
 
          if(loadingParticles!=null)
         loadingParticles.Stop();
 
+        TextureChanging=false;
 
+    /*
     // Shaer change on the new object
     foreach (GameObject obj in ObjectsVersion)
     {
@@ -162,7 +207,7 @@ public class ReConstructSpot : MonoBehaviour
              material.shader = thePresetShader;     
         }
     }
-
+*/
 
 
 
@@ -176,6 +221,8 @@ public class ReConstructSpot : MonoBehaviour
 
 
     }
+
+    
 
 
     void turnoffall(){
@@ -368,21 +415,6 @@ public class ReConstructSpot : MonoBehaviour
 
 
 
-
-        //  if(Input.GetKeyDown(KeyCode.A)){
-
-        //     prompt= debugPrompt;
-        //     CreateDreamMesh();
-        //     // StartGeneration();
-
-        // }
-
-
-
-
-
-
-
        
         ObjectListUpdate();
 
@@ -483,6 +515,8 @@ public class ReConstructSpot : MonoBehaviour
 
     public void   Release(){
 
+         isselsected = false;
+
 
     }
 
@@ -535,7 +569,7 @@ public void ChangeMaterial(){
 
 
 
-        fast3DFunctions.ChangeMaterial(UploadURL,URLID+"@"+Version,prompt);
+        fast3DFunctions.ChangeMaterial(commandURL,URLID+"@"+Version,prompt);
 
          if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Texture.zip"));
@@ -550,7 +584,7 @@ public void DrawingToModel(){
 
 
 
-     modifywithPrompt();
+    modifywithPrompt();
 
 
 
@@ -587,8 +621,8 @@ public void DrawingToModel(){
 
 
 
-            if(!isselsected) return;
-         ClearAllChildren();
+        //     if(!isselsected) return;
+        //  ClearAllChildren();
             if(!Capturing)
                 StartCoroutine(MaskWithPrompt());
 
@@ -610,18 +644,18 @@ public void DrawingToModel(){
      //prompt=promptText.text;
 
         Capturing=true;
-                prompt=voiceLabel.Label.text;
+        prompt=voiceLabel.Label.text;
 
 
        
 
-        Vector2 TargetPos =ObjectScreenPosition();
+        Vector2 TargetPos=ObjectScreenPosition();
         fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
-       fast3DFunctions.ModifyCapture(UploadURL,URLID+".png",TargetPos,URLID+"@"+Version);
+       fast3DFunctions.ModifyCapture(UploadURL,URLID+"@"+Version+"_Modify.png",TargetPos,URLID+"@"+Version);
         
         yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.UploadMask(UploadURL,URLID+"@"+Version+"_Mask.png",prompt,TargetPos,URLID); 
+        fast3DFunctions.UploadMask(UploadURL,URLID+"@"+Version+"_Mask.png",prompt,TargetPos,URLID+"@"+Version); 
 
           
          //yield return new WaitForSeconds(0.3f);
@@ -630,7 +664,7 @@ public void DrawingToModel(){
         fast3DFunctions.ToggleCullingMask();
         if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_reconstruct.zip"));
-        drawingSystem.ClearAndDestroyStackObjects();
+        // drawingSystem.ClearAndDestroyStackObjects();
 
         Capturing=false;
 
@@ -749,7 +783,13 @@ public void DrawingToModel(){
 
         if (www.result == UnityWebRequest.Result.Success)
         {
+            if(url.Contains("_Texture")){
+                    TextureChanging=true;
+            }
             Debug.Log("URL is responding!");
+
+
+
 
 
 

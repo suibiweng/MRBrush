@@ -55,6 +55,8 @@ namespace TiltBrush
             string name = string.Format("Batch_{0}_{1}", parentPool.m_Batches.Count, brush.m_Guid);
             GameObject newObj = new GameObject(name);
 
+            
+
             Transform t = newObj.transform;
             t.parent = rParent;
             t.localPosition = Vector3.zero;
@@ -137,6 +139,12 @@ namespace TiltBrush
 
             m_bVertexDataDirty = false;
             m_bTopologyDirty = false;
+
+            gameObject.tag="Stroke";
+
+            
+
+
         }
 
         /// Reduces memory usage, but causes the next mesh update to be a little more expensive.

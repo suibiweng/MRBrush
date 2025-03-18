@@ -965,7 +965,7 @@ namespace TiltBrush
             }
 
             m_PanelManager.HidePanelsForStartup();
-            RequestPanelsVisibility(false);
+           // RequestPanelsVisibility(false);
         }
 
         void Update()
@@ -1957,7 +1957,7 @@ namespace TiltBrush
                     {
                         if (InputManager.Controllers[(int)otherName].GetControllerGrip())
                         {
-                            RequestPanelsVisibility(false);
+                            //RequestPanelsVisibility(false);
                             m_GrabWidgetState = GrabWidgetState.TwoHands;
                             // Figure out if the new grab starts inside the widget.
                             Vector3 vOtherGrabPos = TrTransform.FromTransform(
@@ -2015,7 +2015,7 @@ namespace TiltBrush
                     IsControllerNearWidget(InputManager.ControllerName.Brush, m_CurrentGrabWidget))
                 {
                     m_GrabWidgetOneHandInfo.m_Name = InputManager.ControllerName.Brush;
-                    RequestPanelsVisibility(true);
+                    //RequestPanelsVisibility(true);
                     InitializeGrabWidgetControllerInfo(m_GrabWidgetOneHandInfo);
                     m_GrabWidgetState = GrabWidgetState.OneHand;
                 }
@@ -2070,7 +2070,7 @@ namespace TiltBrush
                     // Eat input on the off hand so we don't immediately jump in to world transform.
                     if (m_GrabWidgetOneHandInfo.m_Name == InputManager.ControllerName.Brush)
                     {
-                        RequestPanelsVisibility(true);
+                       // RequestPanelsVisibility(true);
                         m_GrabWand.eatInput = true;
                     }
                     else
@@ -2228,7 +2228,7 @@ namespace TiltBrush
             m_SketchSurfacePanel.RequestHideActiveTool(true);
             if (m_GrabWidgetOneHandInfo.m_Name == InputManager.ControllerName.Wand)
             {
-                RequestPanelsVisibility(false);
+                //RequestPanelsVisibility(false);
             }
 
             // Notify visuals.
@@ -2519,7 +2519,7 @@ namespace TiltBrush
             // Update panels visibility if brush grip has changed.
             if (bWorldGrabWandPrev != m_GrabWand.grabbingWorld)
             {
-                RequestPanelsVisibility(!m_GrabWand.grabbingWorld);
+               // RequestPanelsVisibility(!m_GrabWand.grabbingWorld);
             }
 
             // Update tool visibility if brush grip has changed.
@@ -4395,7 +4395,7 @@ namespace TiltBrush
                     break;
                 case GlobalCommands.ViewOnly:
                     m_ViewOnly = !m_ViewOnly;
-                    RequestPanelsVisibility(!m_ViewOnly);
+                  //  RequestPanelsVisibility(!m_ViewOnly);
                     PointerManager.m_Instance.RequestPointerRendering(!m_ViewOnly);
                     // TODO - decide if this is a permanent change
                     // With this line, you can't set a tool such as fly or teleport

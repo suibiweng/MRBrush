@@ -658,7 +658,7 @@ namespace TiltBrush
             InputManager.m_Instance.SetControllersAttachAngle(m_FreePaintPointerAngle);
         }
 
-        void SetPointersRenderingEnabled(bool bEnable)
+       public void SetPointersRenderingEnabled(bool bEnable)
         {
             if (m_PointersRenderingActive != bEnable)
             {
