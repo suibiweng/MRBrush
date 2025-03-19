@@ -13,6 +13,8 @@ namespace TriLibCore.Mappers
     /// to find one whose short filename matches the given <paramref name="originalFilename"/>.
     /// If a match is found, the file’s stream is returned, along with its full name as the final path.
     /// </summary>
+
+    [CreateAssetMenu(menuName = "TriLib/Mappers/External Data/File Picker External Data Mapper")]
     public class FilePickerExternalDataMapper : ExternalDataMapper
     {
         /// <inheritdoc />

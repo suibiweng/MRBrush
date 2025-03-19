@@ -23,7 +23,6 @@ namespace TriLibCore.Mappers
     public class glTF2StandardMaterialMapper : StandardMaterialMapper
     {
         public override bool UseShaderVariantCollection => true;
-
         protected bool UsingSpecularGlossiness;
 
         public override Material MaterialPreset
@@ -104,5 +103,19 @@ namespace TriLibCore.Mappers
             }
             yield break;
         }
+
+        protected override IEnumerable CheckGlossinessValue(MaterialMapperContext materialMapperContext)
+        {
+            var value = 1f - materialMapperContext.Material.GetGenericFloatValueMultiplied(GenericMaterialProperty.GlossinessOrRoughness, materialMapperContext);
+            materialMapperContext.VirtualMaterial.SetProperty("_Glossiness", value);
+            materialMapperContext.VirtualMaterial.SetProperty("_GlossMapScale", value);
+            yield break;
+        }
+
+        public override string GetGlossinessOrRoughnessName(MaterialMapperContext materialMapperContext)
+        {
+            return "_Glossiness";
+        }
+
     }
 }

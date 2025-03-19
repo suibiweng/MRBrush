@@ -115,6 +115,9 @@ public class ReConstructSpot : MonoBehaviour
         Version=0;
 
         StartCoroutine(StrokeAttach());
+
+
+        //  FileCheck= StartCoroutine(CheckURLPeriodically("http://192.168.0.139:8000/20250318172841370b55bf@1_Texture.zip"));
     
     
     
@@ -185,14 +188,10 @@ public class ReConstructSpot : MonoBehaviour
 
 
 
-
-
-
-       
     }
 
          if(loadingParticles!=null)
-        loadingParticles.Stop();
+          loadingParticles.Stop();
 
         TextureChanging=false;
 

@@ -2,6 +2,7 @@
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using TriLibCore.Utils;
+using UnityEngine;
 
 namespace TriLibCore.Mappers
 {
@@ -11,6 +12,7 @@ namespace TriLibCore.Mappers
     /// for an entry whose short filename matches the specified <paramref name="originalFilename"/>.
     /// If a match is found, it opens a stream for that Zip entry.
     /// </summary>
+    [CreateAssetMenu(menuName = "TriLib/Mappers/External Data/Zip File External Data Mapper")]
     public class ZipFileExternalDataMapper : ExternalDataMapper
     {
         /// <inheritdoc />

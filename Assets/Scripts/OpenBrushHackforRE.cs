@@ -19,6 +19,12 @@ public class OpenBrushHackforRE : MonoBehaviour
     }
     bool triggeronce=false;
 
+    
+
+
+
+
+
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +38,7 @@ public class OpenBrushHackforRE : MonoBehaviour
 
                   if(triggeronce)
                 {
-                pointerManager.SetPointersRenderingEnabled(false);
+                pointerManager.gameObject.SetActive(false);
 
                 triggeronce=false;}
 
@@ -43,7 +49,7 @@ public class OpenBrushHackforRE : MonoBehaviour
                 if(!triggeronce)
                 {
 
-                      pointerManager.SetPointersRenderingEnabled(true);
+                      pointerManager.gameObject.SetActive(true);
                 
             triggeronce=true;
 

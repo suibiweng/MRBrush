@@ -14,6 +14,7 @@ namespace TriLibCore.Mappers
     /// comparing their names to the texture's filename. If a matching file is found, its stream is opened
     /// and assigned to the texture loading context.
     /// </summary>
+    [CreateAssetMenu(menuName = "TriLib/Mappers/Texture/Zip File Texture Mapper")]
     public class ZipFileTextureMapper : TextureMapper
     {
         /// <inheritdoc />

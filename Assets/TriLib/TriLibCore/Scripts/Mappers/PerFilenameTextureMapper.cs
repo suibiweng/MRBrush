@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using TriLibCore.Utils;
+using UnityEngine;
 
 namespace TriLibCore.Mappers
 {
@@ -8,6 +9,7 @@ namespace TriLibCore.Mappers
     /// whose name matches the filename of the source model. The search is performed in the directory
     /// where the model file is located.
     /// </summary>
+    [CreateAssetMenu(menuName = "TriLib/Mappers/Texture/Per Filename Texture Mapper")]
     public class PerFilenameTextureMapper : TextureMapper
     {
         /// <summary>

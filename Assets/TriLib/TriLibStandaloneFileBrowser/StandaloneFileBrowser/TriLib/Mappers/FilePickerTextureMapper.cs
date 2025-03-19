@@ -15,6 +15,7 @@ namespace TriLibCore.Mappers
     /// short filename matches the filename specified in the TriLib <see cref="ITexture"/>. If a match is found, 
     /// it opens the corresponding data stream.
     /// </summary>
+    [CreateAssetMenu(menuName = "TriLib/Mappers/Texture/File Picker Texture Mapper")]
     public class FilePickerTextureMapper : TextureMapper
     {
         /// <inheritdoc />

@@ -20609,8 +20609,8 @@ MonoBehaviour:
   m_ShowDuration: 0
   m_GrabDistance: 1
   m_CollisionRadius: 1.2
-  GrabableOnly: 0
-  m_AllowTwoHandGrab: 0
+  GrabableOnly: 1
+  m_AllowTwoHandGrab: 1
   m_DestroyOnHide: 0
   m_AllowHideWithToss: 0
   m_DisableDrift: 0
