@@ -12,10 +12,10 @@ using Klak.Ndi.Interop;
 using System.Drawing;
 
 public enum PromptType{
-    DreamMesh,
-    Material,
-    Drawing,
-    Reconstruction
+    DreamMesh=0,
+    Material=1,
+    Drawing=2,
+    Reconstruction=3
 }
 
 
@@ -299,6 +299,19 @@ public class ReConstructSpot : MonoBehaviour
         {
             Debug.LogWarning("Parent GameObject is not assigned!");
         }
+    }
+
+
+
+    public void selectedMode(int Mode){
+
+      PromptType t= (PromptType)Mode;
+
+
+         promptType=t;
+
+
+
     }
 
 
