@@ -20590,7 +20590,7 @@ MonoBehaviour:
   DebugMsg: {fileID: 7229935839770369838}
   voiceLabel: {fileID: 5394210703600505581}
   drawingSystem: {fileID: 0}
-  thePresetShader: {fileID: 4800000, guid: 6f30a22c6f04445848a37c7c7e922cff, type: 3}
+  thePresetShader: {fileID: 4800000, guid: 47ac8b93797385e4387e61c77fb552a6, type: 3}
   debugPrompt: 
   ObjectsVersion: []
   checkInterval: 5

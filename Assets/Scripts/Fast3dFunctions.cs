@@ -318,7 +318,7 @@ public IEnumerator UploadPNG(Texture2D texture, string url, string filename, str
         form.AddField("prompt", prompt);
         form.AddField("flipY", flipY ? "true" : "false"); 
         form.AddField("xOffset", xOffset.ToString()); 
-        form.AddField("objectPosition", $"({(int)objectPosition.x},{(int)objectPosition.y-150})"); // Send as (x,y)
+        form.AddField("objectPosition", $"({(int)objectPosition.x},{(int)objectPosition.y})"); // Send as (x,y)
         form.AddField("debugDraw", debugDraw ? "true" : "false"); 
         form.AddField("type", type);
         form.AddField("URLID",urlid);
