@@ -405,6 +405,9 @@ MonoBehaviour:
   m_HighlightMeshXfs: []
   m_ValidSnapRotationStickyAngle: 0
   m_SnapGhostMaterial: {fileID: 0}
+  m_UserInteracting: 0
+  PrimaryContorller: {fileID: 0}
+  SecondaryController: {fileID: 0}
 --- !u!114 &2002743142806067945
 MonoBehaviour:
   m_ObjectHideFlags: 0

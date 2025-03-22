@@ -112,7 +112,7 @@ namespace TiltBrush
         protected State m_CurrentState;
         protected Vector3 m_Velocity_LS;
         protected Vector3 m_AngularVelocity_LS;
-        protected bool m_UserInteracting = false;
+        public bool m_UserInteracting = false;
         protected bool m_UserTwoHandGrabbing = false;
         protected InputManager.ControllerName m_InteractingController;
         protected float m_SnapEnabledTimeStamp;
@@ -476,6 +476,19 @@ namespace TiltBrush
         //   primary - the hand that first grabbed the object. Guaranteed to be inside.
         //   secondary - the other hand grabbing the object. Not guaranteed to be inside.
         //   secondaryInObject
+
+        private float initialDistance;
+        private Vector3 initialScale;
+        private bool isScaling = false;
+        public Transform PrimaryContorller;
+        public Transform SecondaryController;
+
+
+
+
+
+
+
         public void SetUserTwoHandGrabbing(
             bool value,
             InputManager.ControllerName primary = InputManager.ControllerName.None,
@@ -488,7 +501,21 @@ namespace TiltBrush
                 {
                     Vector3 vPrimary = InputManager.Controllers[(int)primary].Transform.position;
                     Vector3 vSecondary = InputManager.Controllers[(int)secondary].Transform.position;
+                    
+                    
+                    PrimaryContorller=InputManager.Controllers[(int)primary].Transform;
+                    SecondaryController=InputManager.Controllers[(int)secondary].Transform;
+                    
+                    
                     OnUserBeginTwoHandGrab(vPrimary, vSecondary, secondaryInObject);
+
+
+
+
+
+
+
+
                 }
                 else
                 {
@@ -501,6 +528,30 @@ namespace TiltBrush
                 m_InteractingController = primary;
             }
         }
+
+
+
+        void UpdateTwoHandScaling()
+        {
+
+            if (isScaling)
+            {
+                Vector3 primaryPos = PrimaryContorller.position;
+                Vector3 secondaryPos = SecondaryController.position;
+
+                float currentDistance = Vector3.Distance(primaryPos, secondaryPos);
+                float scaleFactor = currentDistance / initialDistance;
+                scaleFactor = Mathf.Clamp(scaleFactor, 0.5f, 3.0f); // optional clamp
+                 gameObject.transform.localScale = initialScale * scaleFactor;
+            }
+        }
+
+
+
+
+
+
+
 
         virtual public int GetTiltMeterCost() { return 0; }
 
@@ -913,6 +964,10 @@ namespace TiltBrush
                     break;
                 case State.Invisible: break;
             }
+
+
+
+            UpdateTwoHandScaling();
 
             UpdateIntroAnimState();
 
@@ -1853,10 +1908,20 @@ namespace TiltBrush
                         new MoveWidgetCommand(this, LocalTransform, CustomDimension));
                 }
             }
+            var respot =GetComponent<ReConstructSpot>();
+            
+            if(respot!=null){
+                respot.OnSelect();
+            }
+
+
+
         }
 
         virtual protected void OnUserEndInteracting()
         {
+
+            isScaling = false;
             // If snap is enabled when we let go, make sure we don't drift.
             m_SnapDriftCancel = SnapEnabled || m_SnappingToHome;
             if (SnapEnabled)
@@ -1909,10 +1974,31 @@ namespace TiltBrush
         virtual protected void OnUserBeginTwoHandGrab(
             Vector3 primaryHand, Vector3 secondaryHand, bool secondaryHandInObject)
         {
+
+
+            initialDistance = Vector3.Distance(primaryHand, secondaryHand);
+            initialScale = gameObject.transform.localScale;
+            isScaling = true;
+
+        // Save hand types so we can track their positions later
+            // primaryHandType = InputManager.PrimaryHand;     // Replace with actual value if available
+            // secondaryHandType = InputManager.SecondaryHand;
+
+        
+        
+        
+        
+        
         }
 
         // Allows subclasses to do something when a two handed grab is ended.
-        virtual protected void OnUserEndTwoHandGrab() { }
+        virtual protected void OnUserEndTwoHandGrab() { 
+
+            isScaling = false;
+
+
+
+        }
 
         /// Returns the allowable range of the absolute value of the size. In other words, if the range is
         /// (1, 3), then allowable values for size are (-3, -1) and (1, 3).

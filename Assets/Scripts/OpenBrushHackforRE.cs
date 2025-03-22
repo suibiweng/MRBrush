@@ -19,6 +19,17 @@ public class OpenBrushHackforRE : MonoBehaviour
     }
     bool triggeronce=false;
 
+
+
+    public void toDestroySpot(GameObject Target){
+
+        WidgetManager.m_Instance.UnregisterGrabWidget(Target);
+        Destroy(Target);
+
+
+
+    }
+
     
 
 

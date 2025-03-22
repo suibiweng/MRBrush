@@ -129,15 +129,15 @@ private IEnumerator FindNetworkRunner()
     void Update()
     {
         //OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-        if(OVRInput.GetUp(OVRInput.RawButton.A)){
-            createSpot(RightHand.position);
-        }
-        if(OVRInput.GetUp(OVRInput.RawButton.X)){
-            createSpot(LeftHand.position);
-        }
-        if(Input.GetKeyDown(KeyCode.Space)){
-                //createReconsroctSpot();
-        }
+        // if(OVRInput.GetUp(OVRInput.RawButton.A)){
+        //     createSpot(RightHand.position);
+        // }
+        // if(OVRInput.GetUp(OVRInput.RawButton.X)){
+        //     createSpot(LeftHand.position);
+        // }
+        // if(Input.GetKeyDown(KeyCode.Space)){
+        //         //createReconsroctSpot();
+        // }
         // if(Input.GetKeyDown(KeyCode.S)){
         //     SceneSaverTest.SaveGenerateSpotsToPlayerPrefs();
         // }

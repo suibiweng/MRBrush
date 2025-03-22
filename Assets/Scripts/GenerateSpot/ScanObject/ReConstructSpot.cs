@@ -114,13 +114,43 @@ public class ReConstructSpot : MonoBehaviour
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
         Version=0;
 
-        StartCoroutine(StrokeAttach());
+        //StartCoroutine(StrokeAttach());
 
 
         //  FileCheck= StartCoroutine(CheckURLPeriodically("http://192.168.0.139:8000/20250318172841370b55bf@1_Texture.zip"));
     
     
     
+    }
+
+
+    public void GetStrokes(){
+
+
+        if(isselsected){
+
+  
+        GameObject [] targetObject = GameObject.FindGameObjectsWithTag("Stroke");
+        if (targetObject != null)
+        {
+            foreach(var s in targetObject){
+
+                 s.transform.SetParent(Target.transform,true);
+
+
+
+            }
+
+           
+            Debug.Log("Object attached successfully.");
+        }
+
+
+
+          }
+
+
+
     }
 
 
@@ -721,7 +751,14 @@ public void DrawingToModel(){
 
     public void Delete(){
 
-      //  manager.RemoveReConSpot(URLID);
+        manager.RemoveReConSpot(URLID);
+        var hacking= FindFirstObjectByType<OpenBrushHackforRE>();
+
+        if(hacking!=null){
+            hacking.toDestroySpot(gameObject);
+
+
+        }
 
 
     }
