@@ -9242,6 +9242,7 @@ GameObject:
   - component: {fileID: 9047720582583740907}
   - component: {fileID: 5340920360771485886}
   - component: {fileID: 5714272399316631499}
+  - component: {fileID: 5601906763830477377}
   m_Layer: 5
   m_Name: VUI
   m_TagString: Untagged
@@ -9561,6 +9562,19 @@ MonoBehaviour:
   - {fileID: 9144424632771427774}
   - {fileID: 1311992189244587972}
   - {fileID: 491867097779803397}
+--- !u!114 &5601906763830477377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134791436970077312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6ab36234f54b944a6e2d856be8f221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &1167742775677631199
 GameObject:
   m_ObjectHideFlags: 0
