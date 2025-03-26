@@ -603,6 +603,8 @@ public void CreareEraseMask(){
 
     fast3DFunctions.UploadErase(EraseURL,URLID+"@"+Version+"_eraseRGB.png",TargetPos,URLID);
 
+    BroadcastMessage("getSpatialTexture"); 
+
         // if(FileCheck==null)
         // FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
 }
