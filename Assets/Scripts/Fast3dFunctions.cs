@@ -31,7 +31,7 @@ public class Fast3dFunctions : MonoBehaviour
      Texture2D  updatetexture2D;
 
     void Start() {
-        InitCameraMask();
+  //      InitCameraMask();
         //displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
        // StartCapture();
 

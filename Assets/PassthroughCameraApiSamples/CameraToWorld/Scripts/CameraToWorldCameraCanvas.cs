@@ -34,6 +34,8 @@ namespace PassthroughCameraSamples.CameraToWorld
             m_cameraSnapshot.Apply();
 
             m_image.texture = m_cameraSnapshot;
+
+            BroadcastMessage("StartErase");
         }
 
         public void ResumeStreamingFromCamera()

@@ -9791,6 +9791,57 @@ Transform:
   - {fileID: 925719591}
   m_Father: {fileID: 1305579889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1718328004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718328006}
+  - component: {fileID: 1718328005}
+  m_Layer: 0
+  m_Name: REManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1718328005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718328004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6dbfa25a421454e89b73244250a664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CapturePreview: {fileID: 0}
+  MaskCamera: {fileID: 0}
+  CaptureCamera: {fileID: 0}
+  DepthTextureIMG: {fileID: 0}
+  Mask: {fileID: 0}
+  Depth: {fileID: 0}
+  webCamTextureManager: {fileID: 59405327}
+--- !u!4 &1718328006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718328004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.10747418, y: -0.0088068545, z: 99.96085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1725518382
 GameObject:
   m_ObjectHideFlags: 0
@@ -41032,6 +41083,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DepthPhoto: {fileID: 6518846702834309836}
   CameraTexture: {fileID: 3827143533751235035}
+  fast3DFunctions: {fileID: 0}
+  Eraseobj: {fileID: 6847210404817956243}
+  URLID: 
 --- !u!1 &8406414413583728173
 GameObject:
   m_ObjectHideFlags: 0
@@ -43072,3 +43126,4 @@ SceneRoots:
   - {fileID: 113766736}
   - {fileID: 1159942710}
   - {fileID: 6927027706651286029}
+  - {fileID: 1718328006}
