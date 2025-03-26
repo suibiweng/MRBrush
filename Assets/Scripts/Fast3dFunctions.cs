@@ -189,6 +189,8 @@ void InitCameraMask(){
 
     }
 
+    
+
 
 
 
@@ -284,14 +286,30 @@ void InitCameraMask(){
         Texture2D texture2D = ConvertRenderTextureToTexture2D(Mask);
         StartCoroutine(UploadPNG(texture2D, url, filename, prompt,false,0,objPosition,false,"Mask",urlid));
         Destroy(texture2D); // Clean up after upload
-    }   
+    }
 
 
 
-        public void UploadDepthMap(string url, string filename,Vector2 objPosition,string urlid)
+        public void UploadErase(string url, string filename, Vector2 objPosition,string urlid)
+    {
+        streamingTexture=Convert_WebCamTexture_To_Texture2d(webCamTextureManager.WebCamTexture);
+        StartCoroutine(EraseMaskUPload(streamingTexture,url, filename,objPosition,urlid));
+        // Destroy(texture2D); // Clean up after upload
+    }
+
+
+
+
+
+
+
+
+    public void UploadDepthMap(string url, string filename,Vector2 objPosition,string urlid)
     {
         Texture2D texture2D = ConvertRenderTextureToTexture2D(Depth);
-        StartCoroutine(UploadPNG(texture2D, url, filename, "",true,0,objPosition,true,"Depth",urlid));
+
+        // Texture2D texture2D = CaptureRawImageShaderEffect(Depth);
+        StartCoroutine(UploadPNG(texture2D, url, filename, "",false,0,objPosition,false,"Depth",urlid));
         Destroy(texture2D); // Clean up after upload
     }   
 
@@ -306,6 +324,36 @@ void InitCameraMask(){
         RenderTexture.active = null;
         return texture;
     }
+
+    public IEnumerator EraseMaskUPload(Texture2D RGBtext,string url, string filename,Vector2 objectPosition,string urlid){
+
+        byte[] pngData = RGBtext.EncodeToPNG();
+    if (pngData != null)
+    {
+        WWWForm form = new WWWForm();
+        form.AddBinaryData("file", pngData, filename, "image/png");
+        form.AddField("objectPosition", $"({(int)objectPosition.x},{(int)objectPosition.y})"); // Send as (x,y)
+        form.AddField("URLID",urlid);
+
+        UnityWebRequest request = UnityWebRequest.Post(url, form);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Upload complete with filename: " + filename);
+        }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+    }
+
+
+
+
+    }
+
+
 
     // Upload the texture as PNG to the specified URL with a custom filename
 public IEnumerator UploadPNG(Texture2D texture, string url, string filename, string prompt, bool flipY, int xOffset, Vector2 objectPosition, bool debugDraw, string type,string urlid)
@@ -362,5 +410,63 @@ public IEnumerator SendtheCommand( string url,string command ,string urlid,strin
         }
     }
 }
+
+
+
+    public Texture2D ConvertRawImageToTexture2D(RawImage rawImage)
+    {
+        Texture sourceTexture = rawImage.texture;
+
+        // If already a Texture2D, just cast
+        if (sourceTexture is Texture2D tex2D)
+        {
+            return tex2D;
+        }
+
+        // If it's a RenderTexture, convert to Texture2D
+        if (sourceTexture is RenderTexture renderTex)
+        {
+            // Backup the currently active RenderTexture
+            RenderTexture currentRT = RenderTexture.active;
+
+            // Set the RenderTexture as the active one
+            RenderTexture.active = renderTex;
+
+            // Create a new Texture2D with the same dimensions
+            Texture2D tex = new Texture2D(renderTex.width, renderTex.height, TextureFormat.RGBA32, false);
+            tex.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+            tex.Apply();
+
+            // Restore the previously active RenderTexture
+            RenderTexture.active = currentRT;
+
+            return tex;
+        }
+
+        Debug.LogWarning("Unsupported texture type.");
+        return null;
+    }
+
+    public Texture2D CaptureRawImageShaderEffect(RawImage rawImage)
+{
+    Material mat = rawImage.material;
+    Texture sourceTex = rawImage.texture;
+
+    int width = (int)rawImage.rectTransform.rect.width;
+    int height = (int)rawImage.rectTransform.rect.height;
+
+    RenderTexture rt = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+    Graphics.Blit(sourceTex, rt, mat); // Apply material/shader to texture
+
+    RenderTexture.active = rt;
+    Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+    tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+    tex.Apply();
+    RenderTexture.active = null;
+
+    rt.Release();
+    return tex;
+}
+
 
 }

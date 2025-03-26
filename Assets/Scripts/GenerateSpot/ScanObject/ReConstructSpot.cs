@@ -15,7 +15,8 @@ public enum PromptType{
     DreamMesh=0,
     Material=1,
     Drawing=2,
-    Reconstruction=3
+    Reconstruction=3,
+    Erase=4
 }
 
 
@@ -69,8 +70,9 @@ public class ReConstructSpot : MonoBehaviour
 
    public string DownloadURL="";
    public string UploadURL="";
-
    public string commandURL="";
+
+   public string EraseURL="";
 
    public BoundBox boundBox;
    public bool isselsected=false;
@@ -107,10 +109,12 @@ public class ReConstructSpot : MonoBehaviour
         DownloadURL=manager.ServerURL;
         UploadURL=manager.ServerURL;
         commandURL=manager.ServerURL;
+        EraseURL=manager.ServerURL;
         //DownloadURL+=":"+manager.downloadPort+"/";
         DownloadURL+=":"+"8000/";
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
+        EraseURL+=":"+manager.Port+"/EraseMask";
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
         Version=0;
 
@@ -380,6 +384,10 @@ public class ReConstructSpot : MonoBehaviour
 
 
 
+
+
+
+
     public void SendThePrompt(){
         if(loadingParticles!=null)
             loadingParticles.Play();
@@ -403,6 +411,10 @@ public class ReConstructSpot : MonoBehaviour
             ReconstructionTheModel();
             break;
 
+            case PromptType.Erase:
+            CreareEraseMask();
+            break;
+
 
 
 
@@ -418,22 +430,8 @@ public class ReConstructSpot : MonoBehaviour
     }
 
     public void TransformUpdate(){
-
-
-         
          if(SizeAdjustment==null)return;
-
-
           Target.transform.localScale=new Vector3(1f+SizeAdjustment.value,1f+SizeAdjustment.value,1f+SizeAdjustment.value);
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -599,6 +597,17 @@ public void CreateDreamMesh(){
 }
 
 
+public void CreareEraseMask(){
+     Vector2 TargetPos=ObjectScreenPosition();
+
+
+    fast3DFunctions.UploadErase(EraseURL,URLID+"@"+Version+"_eraseRGB.png",TargetPos,URLID);
+
+        // if(FileCheck==null)
+        // FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
+}
+
+
 public void ReconstructionTheModel(){
 
     StartGeneration();
@@ -723,9 +732,11 @@ public void DrawingToModel(){
 
 
         Vector2 TargetPos =ObjectScreenPosition();
-        fast3DFunctions.ToggleCullingMask();
+       // fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
         fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID+"@"+Version);
+        //fast3DFunctions.UploadDepthMap(UploadURL,URLID+"@"+Version+"_Depth.png",TargetPos,URLID+"@"+Version);
+        
 
 
        // fast3DFunctions.sendCommand(commandURL,"IpcamCapture",URLID);
@@ -734,7 +745,9 @@ public void DrawingToModel(){
          //yield return new WaitForSeconds(0.3f);
         //fast3DFunctions.CaptureDepth(UploadURL,URLID+"_Depth.png",TargetPos,URLID);
         yield return new WaitForSeconds(0.3f);
-       fast3DFunctions.ToggleCullingMask();
+      // fast3DFunctions.ToggleCullingMask();
+
+
         if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL +"/"+ URLID+"@"+Version + "_reconstruct.zip"));
 

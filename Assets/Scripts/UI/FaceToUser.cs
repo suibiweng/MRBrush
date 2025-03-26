@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-
+using RealityEditor;
 public class FaceToUser : MonoBehaviour
 {
+    RealityEditorManager realityEditorManager;
     public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        player=Camera.main.gameObject;
+
+        realityEditorManager=FindAnyObjectByType<RealityEditorManager>();
+        player=realityEditorManager.PlayerCamera.gameObject;
     }
 
     // Update is called once per frame

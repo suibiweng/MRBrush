@@ -19009,6 +19009,7 @@ MonoBehaviour:
   DownloadURL: 
   UploadURL: 
   commandURL: 
+  EraseURL: 
   boundBox: {fileID: 6057222907705743746}
   isselsected: 0
   _grabbable: {fileID: 5163660455732127796}
@@ -19054,6 +19055,9 @@ MonoBehaviour:
   m_HighlightMeshXfs: []
   m_ValidSnapRotationStickyAngle: 0
   m_SnapGhostMaterial: {fileID: 0}
+  m_UserInteracting: 0
+  PrimaryContorller: {fileID: 0}
+  SecondaryController: {fileID: 0}
 --- !u!1 &7625156112618637544
 GameObject:
   m_ObjectHideFlags: 0

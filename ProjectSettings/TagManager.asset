@@ -32,7 +32,7 @@ TagManager:
   - GpuIntersection
   - PinnedStencilObject
   - Overlay
-  - 
+  - DepthMap
   - 
   - 
   - 
