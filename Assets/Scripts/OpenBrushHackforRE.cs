@@ -12,9 +12,9 @@ public class OpenBrushHackforRE : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            PanelManager.m_Instance.ToggleSketchbookPanels();
-            App.Instance.ExitIntroSketch();
-            PromoManager.m_Instance.RequestAdvancedPanelsPromo();
+            // PanelManager.m_Instance.ToggleSketchbookPanels();
+            // App.Instance.ExitIntroSketch();
+            // PromoManager.m_Instance.RequestAdvancedPanelsPromo();
         
     }
     bool triggeronce=false;

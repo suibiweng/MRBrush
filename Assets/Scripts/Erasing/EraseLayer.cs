@@ -6,6 +6,8 @@ using RealityEditor;
 
 public class EraseLayer : MonoBehaviour
 {
+
+    RealityEditorManager realityEditorManager;
     public Renderer DepthPhoto;
 
     public RawImage CameraTexture;
@@ -17,16 +19,28 @@ public class EraseLayer : MonoBehaviour
 
     public Transform Eraseobj;
 
-    public string URLID;
+    public string URLID="";
+
+
+    public GameObject EraseMsk;
+    public GameObject AimStar;
+
+    public Transform player;
+
+    public EraseUIcontrol eraseUIcontrol;
 
     // Start is called before the first frame update
     void Start()
     {
+        realityEditorManager=FindObjectOfType<RealityEditorManager>();
+        eraseUIcontrol=FindObjectOfType<EraseUIcontrol>();
+
+
+        player=realityEditorManager.PlayerCamera;
 
         fast3DFunctions=FindAnyObjectByType<Fast3dFunctions>();
-
-
         photoMat=DepthPhoto.material;
+        AimStar=GameObject.FindWithTag("AimStar");
 
 
         
@@ -44,20 +58,58 @@ public class EraseLayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         photoMat.SetTexture("_RGBMAP",CameraTexture.texture);
+           if(!eraseUIcontrol.eraseisOn)return;
+
+
+        if (OVRInput.GetDown(OVRInput.Button.One)){
+
+            StartErase();
+
+
+        }
+
+        // if(!Captured)
+        //    photoMat.SetTexture("_RGBMAP",CameraTexture.texture);
+
+
+        //  if(Input.GetKeyDown(KeyCode.Space)){
+
+        //     StartErase();
+
+
+        //  }
         
     }
+    
 
+    public bool Captured =false;
 
    public void StartErase(){
 
+
+
+    
+
         URLID=IDGenerator.GenerateID(); 
-
-        
-
-        fast3DFunctions.UploadErase("",URLID+"@"+"_eraseRGB.png", ObjectScreenPosition(Eraseobj),URLID);
+        fast3DFunctions.UploadErase("http://192.168.0.139:5000/EraseMask",URLID+"_eraseRGB.png",new Vector2(1280/2,960/2),URLID);
+        // this.BroadcastMessage("getSpatialTexture",URLID);
 
 
+
+        Transform t= DepthPhoto.gameObject.transform;
+
+
+        GameObject Cover = Instantiate(EraseMsk,AimStar.transform.position,t.rotation);
+
+        Cover.transform.LookAt(player);
+        SpatialPicture sp=Cover.GetComponent<SpatialPicture>();
+        sp.URLID=URLID;
+
+        // sp.getSpatialTexture(URLID);
+
+
+
+        Captured=true;
 
 
 

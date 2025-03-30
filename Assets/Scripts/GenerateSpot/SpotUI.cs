@@ -35,14 +35,80 @@ public class SpotUI : MonoBehaviour
         
     }
 
+    void setMode(){
+
+        switch (spot.promptType){
+            case PromptType.DreamMesh:
+
+            modeImage.sprite=Modesprites[0];
+            mode_text.text=modeTexts[0];
+
+
+
+
+            break;
+
+
+            case PromptType.Material:
+
+              modeImage.sprite=Modesprites[1];
+            mode_text.text=modeTexts[1];
+
+            break;
+
+
+
+            case PromptType.Reconstruction:
+
+                               modeImage.sprite=Modesprites[3];
+            mode_text.text=modeTexts[3];
+
+            break;
+
+
+
+
+            case PromptType.Drawing:
+
+                    modeImage.sprite=Modesprites[2];
+            mode_text.text=modeTexts[2];
+
+            break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+  
+
+
+
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         if(spot!=null){
 
-            modeImage.sprite=Modesprites[(int)spot.promptType];
-            mode_text.text=modeTexts[(int)spot.promptType];
+
 
 
         }

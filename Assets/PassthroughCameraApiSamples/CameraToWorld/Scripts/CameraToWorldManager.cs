@@ -16,9 +16,9 @@ namespace PassthroughCameraSamples.CameraToWorld
         private PassthroughCameraEye CameraEye => m_webCamTextureManager.Eye;
         private Vector2Int CameraResolution => m_webCamTextureManager.RequestedResolution;
         [SerializeField] private GameObject m_centerEyeAnchor;
-        [SerializeField] private GameObject m_headMarker;
-        [SerializeField] private GameObject m_cameraMarker;
-        [SerializeField] private GameObject m_rayMarker;
+        // [SerializeField] private GameObject m_headMarker;
+        // [SerializeField] private GameObject m_cameraMarker;
+        // [SerializeField] private GameObject m_rayMarker;
 
         [SerializeField] private CameraToWorldCameraCanvas m_cameraCanvas;
         [SerializeField] private float m_canvasDistance = 1f;
@@ -54,10 +54,10 @@ namespace PassthroughCameraSamples.CameraToWorld
 
             ScaleCameraCanvas();
 
-            m_rayGo1 = m_rayMarker;
-            m_rayGo2 = Instantiate(m_rayMarker);
-            m_rayGo3 = Instantiate(m_rayMarker);
-            m_rayGo4 = Instantiate(m_rayMarker);
+            // m_rayGo1 = m_rayMarker;
+            // m_rayGo2 = Instantiate(m_rayMarker);
+            // m_rayGo3 = Instantiate(m_rayMarker);
+            // m_rayGo4 = Instantiate(m_rayMarker);
             UpdateRaysRendering();
         }
 
@@ -73,8 +73,8 @@ namespace PassthroughCameraSamples.CameraToWorld
                 {
                     // Asking the canvas to make a snapshot before stopping WebCamTexture
                     m_cameraCanvas.MakeCameraSnapshot();
-                    m_webCamTextureManager.WebCamTexture.Stop();
-                    m_snapshotHeadPose = m_centerEyeAnchor.transform.ToOVRPose();
+                    // m_webCamTextureManager.WebCamTexture.Stop();
+                    // m_snapshotHeadPose = m_centerEyeAnchor.transform.ToOVRPose();
                 }
                 else
                 {
@@ -139,12 +139,12 @@ namespace PassthroughCameraSamples.CameraToWorld
         private void UpdateMarkerPoses()
         {
             var headPose = OVRPlugin.GetNodePoseStateImmediate(OVRPlugin.Node.Head).Pose.ToOVRPose();
-            m_headMarker.transform.position = headPose.position;
-            m_headMarker.transform.rotation = headPose.orientation;
+            // m_headMarker.transform.position = headPose.position;
+            // m_headMarker.transform.rotation = headPose.orientation;
 
             var cameraPose = PassthroughCameraUtils.GetCameraPoseInWorld(CameraEye);
-            m_cameraMarker.transform.position = cameraPose.position;
-            m_cameraMarker.transform.rotation = cameraPose.rotation;
+            // m_cameraMarker.transform.position = cameraPose.position;
+            // m_cameraMarker.transform.rotation = cameraPose.rotation;
 
             // Position the canvas in front of the camera
             m_cameraCanvas.transform.position = cameraPose.position + cameraPose.rotation * Vector3.forward * m_canvasDistance;
@@ -178,17 +178,17 @@ namespace PassthroughCameraSamples.CameraToWorld
 
         private void TranslateMarkersForDebug(bool moveForward)
         {
-            var gameObjects = new[]
-            {
-                m_headMarker, m_cameraMarker, m_cameraCanvas.gameObject, m_rayGo1, m_rayGo2, m_rayGo3, m_rayGo4
-            };
+            // var gameObjects = new[]
+            // {
+            //     m_headMarker, m_cameraMarker, m_cameraCanvas.gameObject, m_rayGo1, m_rayGo2, m_rayGo3, m_rayGo4
+            // };
 
-            var direction = m_snapshotTaken ? m_snapshotHeadPose.orientation : m_centerEyeAnchor.transform.rotation;
+            // var direction = m_snapshotTaken ? m_snapshotHeadPose.orientation : m_centerEyeAnchor.transform.rotation;
 
-            foreach (var go in gameObjects)
-            {
-                go.transform.position += direction * m_headSpaceDebugShift * (moveForward ? 1 : -1);
-            }
+            // foreach (var go in gameObjects)
+            // {
+            //     go.transform.position += direction * m_headSpaceDebugShift * (moveForward ? 1 : -1);
+            // }
         }
     }
 }

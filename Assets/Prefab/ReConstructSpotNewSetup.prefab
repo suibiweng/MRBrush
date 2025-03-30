@@ -20594,6 +20594,7 @@ MonoBehaviour:
   thePresetShader: {fileID: 4800000, guid: 47ac8b93797385e4387e61c77fb552a6, type: 3}
   debugPrompt: 
   ObjectsVersion: []
+  AimStar: {fileID: 0}
   checkInterval: 5
 --- !u!114 &8177004767649467664
 MonoBehaviour:

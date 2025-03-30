@@ -74,6 +74,7 @@ namespace TiltBrush
             PanelManager.m_Instance.ToggleSketchbookPanels();
             App.Instance.ExitIntroSketch();
             PromoManager.m_Instance.RequestAdvancedPanelsPromo();
+            FindObjectOfType<OpenBrushHackforRE>().pointerManager.gameObject.SetActive(false);
 
             // Change the shown sketchset by simulating a press on the corresponding gallery button.
             //SketchbookPanel panel = m_Manager.GetComponent<SketchbookPanel>();

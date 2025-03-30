@@ -38,7 +38,7 @@ public class Fast3dFunctions : MonoBehaviour
     // ToggleCullingMask();
 
 
-    updatetexture2D = new Texture2D(webCamTextureManager.WebCamTexture.width, webCamTextureManager.WebCamTexture.height, TextureFormat.RGBA32, false);
+    //updatetexture2D = new Texture2D(webCamTextureManager.WebCamTexture.width, webCamTextureManager.WebCamTexture.height, TextureFormat.RGBA32, false);
        
 
     
@@ -146,6 +146,8 @@ void InitCameraMask(){
       
         // Graphics.CopyTexture(webCamTextureManager.WebCamTexture, updatetexture2D);
         // UpdateTexture(updatetexture2D);
+
+        if(CapturePreview!=null)
 
         CapturePreview.texture=webCamTextureManager.WebCamTexture;
 

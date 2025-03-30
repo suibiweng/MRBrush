@@ -11,10 +11,12 @@ namespace PassthroughCameraSamples.CameraToWorld
     public class CameraToWorldCameraCanvas : MonoBehaviour
     {
         [SerializeField] private WebCamTextureManager m_webCamTextureManager;
-        [SerializeField] private Text m_debugText;
+        // [SerializeField] private Text m_debugText;
         [SerializeField] private RawImage m_image;
         private Texture2D m_cameraSnapshot;
         private Color32[] m_pixelsBuffer;
+
+        public EraseLayer eraseLayer;
 
         public void MakeCameraSnapshot()
         {
@@ -35,7 +37,10 @@ namespace PassthroughCameraSamples.CameraToWorld
 
             m_image.texture = m_cameraSnapshot;
 
-            BroadcastMessage("StartErase");
+
+            // if(eraseLayer!=null)eraseLayer.StartErase();
+
+
         }
 
         public void ResumeStreamingFromCamera()
@@ -49,7 +54,7 @@ namespace PassthroughCameraSamples.CameraToWorld
             {
                 yield return null;
             }
-            m_debugText.text = "WebCamTexture Object ready and playing.";
+            // m_debugText.text = "WebCamTexture Object ready and playing.";
             ResumeStreamingFromCamera();
         }
 
@@ -57,7 +62,7 @@ namespace PassthroughCameraSamples.CameraToWorld
         {
             if (PassthroughCameraPermissions.HasCameraPermission != true)
             {
-                m_debugText.text = "No permission granted.";
+                // m_debugText.text = "No permission granted.";
             }
         }
     }

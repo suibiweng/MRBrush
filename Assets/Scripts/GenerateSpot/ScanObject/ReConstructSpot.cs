@@ -91,13 +91,18 @@ public class ReConstructSpot : MonoBehaviour
   public string debugPrompt="Red Apple";
 
    public List<GameObject> ObjectsVersion ;
-
+    
    private bool TextureChanging=false;
+   public GameObject AimStar;
 
     void Start()
     {
 
         ObjectsVersion= new List<GameObject>();
+        AimStar=GameObject.FindWithTag("AimStar");
+    
+
+
 
 
        
@@ -475,7 +480,7 @@ public class ReConstructSpot : MonoBehaviour
         prompt=promptText.text;
         DebugMsg.text=prompt;
 
-        UIsetup();
+       // UIsetup();
 
 
 

@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RealityEditor;
 
+
 public class SpatialPicture : MonoBehaviour
 {
-    ReConstructSpot spot;
+    public string URLID;
+    // ReConstructSpot spot;
 
     RealityEditorManager manager;
     public MeshRenderer meshRenderer;
@@ -26,35 +28,43 @@ public class SpatialPicture : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         manager = FindObjectOfType<RealityEditorManager>();
+        // manager = FindObjectOfType<RealityEditorManager>();
 
-        donwloadurl=spot.DownloadURL;
+        donwloadurl="http://192.168.0.139:8000/";
 
-        HeadCamera=manager.PlayerCamera;
+     //   HeadCamera=manager.PlayerCamera;
+
+
+        // getSpatialTexture("20250326201534000c2a5f");
 
         
 
-       meshRenderer=GetComponent<MeshRenderer>();
+    //    meshRenderer=GetComponent<MeshRenderer>();
        
        material=meshRenderer.materials[0];
+
+
+        StartCoroutine(CheckAndUpdateTexturesPeriodically(donwloadurl+URLID+"_EraseMask.png",donwloadurl+URLID+"_Remove_Depth.png"));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!lookat){
-            meshRenderer.gameObject.transform.LookAt(HeadCamera.position);
-        }
+        // if(!lookat){
+        //     meshRenderer.gameObject.transform.LookAt(HeadCamera.position);
+        // }
         
     }
 
 
-    public void getSpatialTexture(){
-         lookat=true;
+    public void getSpatialTexture(string urlid){
 
-       StartCoroutine(DownloadTextures(donwloadurl+spot.URLID+"@"+spot.Version+"_EraseRGB.png",
-        donwloadurl+spot.URLID+"@"+spot.Version+"_EraseDepth.png"));
+    //    StartCoroutine(DownloadTextures(donwloadurl+URLID+"_EraseMask.png",donwloadurl+URLID+"_Remove_Depth.png"));
 
+        URLID=urlid;
+
+
+       StartCoroutine(CheckAndUpdateTexturesPeriodically(donwloadurl+URLID+"_EraseMask.png",donwloadurl+URLID+"_Remove_Depth.png"));
 
     }
     
@@ -63,54 +73,84 @@ public class SpatialPicture : MonoBehaviour
 
 
 
-   public IEnumerator DownloadTextures(string textureRGB, string textureDepth)
-{
-    bool rgbSuccess = false;
-    bool depthSuccess = false;
+  
 
-    // Continue looping until both textures are successfully downloaded
-    while (!rgbSuccess || !depthSuccess)
+        private bool rgbSuccess = false;
+    private bool depthSuccess = false;
+       public float checkInterval = 5f;
+int rgbTries = 0;
+int depthTries = 0;
+ IEnumerator CheckAndUpdateTexturesPeriodically(string rgb, string depth)
     {
-        // Wait before trying again (prevents spamming the server)
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f); // optional delay before first check
 
-        if (!rgbSuccess)
+        while (!rgbSuccess || !depthSuccess)
         {
-            UnityWebRequest www1 = UnityWebRequestTexture.GetTexture(textureRGB);
-            yield return www1.SendWebRequest();
+            if (!rgbSuccess)
+            {
+                rgbTries++;
+                Debug.Log($"🔄 RGB try #{rgbTries}");
+                yield return StartCoroutine(DownloadAndApplyTexture(rgb, "_RGBMAP", true));
+            }
 
-            if (www1.result != UnityWebRequest.Result.Success)
+            if (!depthSuccess)
             {
-                Debug.LogError("Failed to download texture 1: " + www1.error);
+                depthTries++;
+                Debug.Log($"🔄 Depth try #{depthTries}");
+                yield return StartCoroutine(DownloadAndApplyTexture(depth, "_DepthMap", false));
             }
-            else
-            {
-                Texture2D texture1 = DownloadHandlerTexture.GetContent(www1);
-                material.SetTexture("_RGBMAP", texture1);
-                rgbSuccess = true;
-            }
+
+            if (!rgbSuccess || !depthSuccess)
+                yield return new WaitForSeconds(checkInterval);
         }
 
-        if (!depthSuccess)
-        {
-            UnityWebRequest www2 = UnityWebRequestTexture.GetTexture(textureDepth);
-            yield return www2.SendWebRequest();
-
-            if (www2.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Failed to download texture 2: " + www2.error);
-            }
-            else
-            {
-                Texture2D texture2 = DownloadHandlerTexture.GetContent(www2);
-                material.SetTexture("_DepthMap", texture2);
-                depthSuccess = true;
-            }
-        }
-
-       
+        Debug.Log("✅ Both RGB and Depth textures successfully downloaded and applied.");
     }
 
-    // When both downloads are successful, the coroutine naturally ends.
+    IEnumerator DownloadAndApplyTexture(string url, string textureProperty, bool isRGB)
+    {
+        Debug.Log($"➡️ Attempting to download from {url}");
+
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        www.timeout = 10;
+
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(www);
+
+            if (texture != null)
+            {
+                if (material == null)
+                {
+                    Debug.LogError("❗ Material not assigned!");
+                    yield break;
+                }
+
+                material.SetTexture(textureProperty, texture);
+
+                if (isRGB)
+                {
+                    rgbSuccess = true;
+                    Debug.Log("✅ RGB texture set.");
+                }
+                else
+                {
+                    depthSuccess = true;
+                    Debug.Log("✅ Depth texture set.");
+                }
+            }
+            else
+            {
+                Debug.LogError($"❌ Texture from {url} was null. Will retry.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"❌ Could not fetch {url}. Error: {www.error} | Result: {www.result} | Code: {www.responseCode}");
+        }
+
+        www.Dispose();
     }
 }
