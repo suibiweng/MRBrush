@@ -239,4 +239,5 @@ MonoBehaviour:
   material: {fileID: 0}
   HeadCamera: {fileID: 0}
   HideSpot: {fileID: 7485326893922799972}
+  Cover: {fileID: 279810239068014437}
   checkInterval: 5

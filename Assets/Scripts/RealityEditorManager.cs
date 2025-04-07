@@ -7,8 +7,13 @@ using TMPro;
 using TriLibCore.Dae.Schema;
 
 
+
+
+
 public class RealityEditorManager : MonoBehaviour
 {
+
+    public bool forMovie;
     public Transform LeftHand, RightHand;
     public Transform PlayerCamera; 
     public string Port;

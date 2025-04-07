@@ -101,7 +101,7 @@ namespace PassthroughCameraSamples.CameraToWorld
 
             if (!m_snapshotTaken)
             {
-                UpdateMarkerPoses();
+               // UpdateMarkerPoses();
 
                 if (m_isDebugOn)
                 {
@@ -130,10 +130,10 @@ namespace PassthroughCameraSamples.CameraToWorld
         {
             // Hide rays' middle segments and rendering only their tips
             // when rays' origins are too close to the headset. Otherwise, it looks ugly
-            foreach (var rayGo in new[] { m_rayGo1, m_rayGo2, m_rayGo3, m_rayGo4 })
-            {
-                rayGo.GetComponent<CameraToWorldRayRenderer>().RenderMiddleSegment(m_snapshotTaken || m_isDebugOn);
-            }
+            // foreach (var rayGo in new[] { m_rayGo1, m_rayGo2, m_rayGo3, m_rayGo4 })
+            // {
+            //     rayGo.GetComponent<CameraToWorldRayRenderer>().RenderMiddleSegment(m_snapshotTaken || m_isDebugOn);
+            // }
         }
 
         private void UpdateMarkerPoses()

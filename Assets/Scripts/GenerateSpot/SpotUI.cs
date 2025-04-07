@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using RealityEditor;
+using DimBoxes;
 
 
 public class SpotUI : MonoBehaviour
 {
+    public BoundBox boundBox;
     // Start is called before the first frame update
     public Toggle HideToggle;
 
@@ -109,6 +111,9 @@ public class SpotUI : MonoBehaviour
         if(spot!=null){
 
 
+            setMode();
+
+
 
 
         }
@@ -117,12 +122,14 @@ public class SpotUI : MonoBehaviour
         if (HideToggle.isOn){
             ToolCanvas.alpha = 0;
             ToolCanvas.interactable = false;
+            boundBox.enabled=false;
 
 
         }else{
 
                ToolCanvas.alpha = 1;
             ToolCanvas.interactable = true;
+            boundBox.enabled=true;
         }
         
     }

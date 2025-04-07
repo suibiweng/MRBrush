@@ -7,6 +7,7 @@ TagManager:
   - Ignore
   - Stroke
   - AimStar
+  - Tracker
   layers:
   - Default
   - TransparentFX

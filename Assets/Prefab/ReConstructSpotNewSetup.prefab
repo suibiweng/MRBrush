@@ -20564,9 +20564,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c9d54fea1974f4daeb40bbb52c13f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTracking: {fileID: 0}
+  Tracker: {fileID: 0}
   VersionInfoText: {fileID: 4966346079621656513}
   SizeAdjustment: {fileID: 454626718028103068}
   TransparentAdjustment: {fileID: 0}
+  MaskDrawing: {fileID: 0}
   PromptModes: {fileID: 204035679256622038}
   promptType: 0
   Version: 0
@@ -20584,6 +20587,7 @@ MonoBehaviour:
   UploadURL: 
   commandURL: 
   EraseURL: 
+  Drawingto3DURL: 
   boundBox: {fileID: 3543274151902850039}
   isselsected: 0
   _grabbable: {fileID: 9137939102504220602}
@@ -20595,6 +20599,7 @@ MonoBehaviour:
   debugPrompt: 
   ObjectsVersion: []
   AimStar: {fileID: 0}
+  isStrokesOnly: 0
   checkInterval: 5
 --- !u!114 &8177004767649467664
 MonoBehaviour:

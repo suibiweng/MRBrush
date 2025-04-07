@@ -541,7 +541,7 @@ namespace TiltBrush
 
                 float currentDistance = Vector3.Distance(primaryPos, secondaryPos);
                 float scaleFactor = currentDistance / initialDistance;
-                scaleFactor = Mathf.Clamp(scaleFactor, 0.5f, 3.0f); // optional clamp
+                scaleFactor = Mathf.Clamp(scaleFactor, 0.5f, 8.0f); // optional clamp
                  gameObject.transform.localScale = initialScale * scaleFactor;
             }
         }

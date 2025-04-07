@@ -43,7 +43,8 @@ public class OpenBrushHackforRE : MonoBehaviour
             GameObject spot=REmanager.GetSelected();
             ReConstructSpot re=spot.GetComponent<ReConstructSpot>();
 
-            if(re.promptType!=PromptType.Drawing){
+            if(re.promptType!=PromptType.Drawing
+             && re.promptType!=PromptType.Reconstruction){
 
                 sketchControlsScript.RequestPanelsVisibility(false);
 

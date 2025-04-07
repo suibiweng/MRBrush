@@ -18990,6 +18990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c9d54fea1974f4daeb40bbb52c13f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTracking: {fileID: 0}
+  Tracker: {fileID: 0}
   VersionInfoText: {fileID: 0}
   SizeAdjustment: {fileID: 0}
   TransparentAdjustment: {fileID: 0}
@@ -19010,6 +19012,7 @@ MonoBehaviour:
   UploadURL: 
   commandURL: 
   EraseURL: 
+  Drawingto3DURL: 
   boundBox: {fileID: 6057222907705743746}
   isselsected: 0
   _grabbable: {fileID: 5163660455732127796}
@@ -19020,6 +19023,7 @@ MonoBehaviour:
   thePresetShader: {fileID: 4800000, guid: 6f30a22c6f04445848a37c7c7e922cff, type: 3}
   debugPrompt: a Red Apple
   ObjectsVersion: []
+  AimStar: {fileID: 0}
   checkInterval: 5
 --- !u!114 &3730410076782256520
 MonoBehaviour:

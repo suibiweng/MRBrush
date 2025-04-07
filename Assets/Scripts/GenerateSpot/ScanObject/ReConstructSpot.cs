@@ -16,7 +16,10 @@ public enum PromptType{
     Material=1,
     Drawing=2,
     Reconstruction=3,
-    Erase=4
+    Erase=4,
+    DrawOnly=5
+
+
 }
 
 
@@ -24,11 +27,18 @@ public enum PromptType{
 public class ReConstructSpot : MonoBehaviour
 {
 
+     public Toggle isTracking;
+    public Transform Tracker;
+
     //Version ControlUI
     public TMP_Text VersionInfoText;
 
     public Slider SizeAdjustment;
     public Slider TransparentAdjustment;
+
+
+    public Toggle MaskDrawing;
+
 
     
     
@@ -74,6 +84,8 @@ public class ReConstructSpot : MonoBehaviour
 
    public string EraseURL="";
 
+   public string Drawingto3DURL="";
+
    public BoundBox boundBox;
    public bool isselsected=false;
   public Grabbable _grabbable;
@@ -95,11 +107,15 @@ public class ReConstructSpot : MonoBehaviour
    private bool TextureChanging=false;
    public GameObject AimStar;
 
+
+   public bool isStrokesOnly;
+
     void Start()
     {
 
         ObjectsVersion= new List<GameObject>();
         AimStar=GameObject.FindWithTag("AimStar");
+        Tracker=GameObject.FindWithTag("Tracker").transform;
     
 
 
@@ -115,11 +131,17 @@ public class ReConstructSpot : MonoBehaviour
         UploadURL=manager.ServerURL;
         commandURL=manager.ServerURL;
         EraseURL=manager.ServerURL;
+        Drawingto3DURL=manager.ServerURL;
+
         //DownloadURL+=":"+manager.downloadPort+"/";
         DownloadURL+=":"+"8000/";
         UploadURL+=":"+manager.Port+"/upload";
         commandURL+=":"+manager.Port+"/command";
         EraseURL+=":"+manager.Port+"/EraseMask";
+        Drawingto3DURL+=":"+manager.Port+"/DrawToModel";
+
+
+
         _grabbable.WhenPointerEventRaised += HandlePointerEventRaised;
         Version=0;
 
@@ -163,19 +185,25 @@ public class ReConstructSpot : MonoBehaviour
     }
 
 
+    public void setDrawing(bool set){
+
+        isStrokesOnly=set;
+
+
+
+    }
+
+
 
 
     IEnumerator StrokeAttach()
     {
 
         // if( promptType!=PromptType.Drawing)  yield return null;
-        
 
         yield return new WaitForSeconds(0.5f); // Small delay to allow object instantiation
 
     if(isselsected){
-
-  
         GameObject targetObject = GameObject.FindWithTag("Stroke");
         if (targetObject != null)
         {
@@ -387,6 +415,29 @@ public class ReConstructSpot : MonoBehaviour
 
     }
 
+    public void DrawTo3D(){
+
+        //fast3DFunctions.UploadDrawing("http://192.168.0.139:5000/DrawToModel",URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
+        fast3DFunctions.UploadDrawing(Drawingto3DURL,URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
+
+        if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+
+        loadingParticles.Play();
+
+
+
+
+
+
+
+
+    }
+
+
+
+    
+
 
 
 
@@ -394,8 +445,13 @@ public class ReConstructSpot : MonoBehaviour
 
 
     public void SendThePrompt(){
+        if(!isselsected) return;
+
+
         if(loadingParticles!=null)
             loadingParticles.Play();
+
+            GetComponent<SpotUI>().HideToggle.isOn=true;
 
         switch (promptType){
             case PromptType.DreamMesh:
@@ -403,7 +459,16 @@ public class ReConstructSpot : MonoBehaviour
             break;
 
             case PromptType.Drawing:
-            DrawingToModel();
+                if(!isStrokesOnly)
+                DrawingToModel();
+                else{
+
+                    DrawTo3D();
+
+
+                }
+
+
             break;
 
 
@@ -413,11 +478,13 @@ public class ReConstructSpot : MonoBehaviour
             break;
 
             case PromptType.Reconstruction:
+
             ReconstructionTheModel();
             break;
 
             case PromptType.Erase:
-            CreareEraseMask();
+                CreareEraseMask();
+
             break;
 
 
@@ -439,6 +506,35 @@ public class ReConstructSpot : MonoBehaviour
           Target.transform.localScale=new Vector3(1f+SizeAdjustment.value,1f+SizeAdjustment.value,1f+SizeAdjustment.value);
     }
 
+    
+
+    void tracking(){
+
+        if(isTracking==null) return;
+
+        if(isTracking.isOn){
+
+            
+
+            transform.position = Tracker.position/10;
+
+
+
+
+        }else{
+
+
+
+            transform.SetParent(null, true); 
+
+
+            
+        }
+
+
+
+    }
+
 
 
 
@@ -447,6 +543,9 @@ public class ReConstructSpot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        tracking();
 
 
 
@@ -463,8 +562,19 @@ public class ReConstructSpot : MonoBehaviour
        
         ObjectListUpdate();
 
-            // PresetTheDownloadedModel();
+        // PresetTheDownloadedModel();
 
+
+
+
+        if (OVRInput.GetDown(OVRInput.Button.Two)){
+            if( GetComponent<SpotUI>().HideToggle.isOn==false)
+                    SendThePrompt();
+
+        }
+
+
+        
 
 
         
@@ -571,7 +681,7 @@ public class ReConstructSpot : MonoBehaviour
 Vector2 ObjectScreenPosition()
 {
     // Convert this GameObject's position to 2D screen coordinates
-    Vector3 screenPosition = fast3DFunctions.MaskCamera.WorldToScreenPoint(transform.position);
+    Vector3 screenPosition = fast3DFunctions.MaskCamera.WorldToScreenPoint(AimStar.transform.position);
 
     // Check if the object is in front of the camera
     if (screenPosition.z > 0)
@@ -608,7 +718,7 @@ public void CreareEraseMask(){
 
     fast3DFunctions.UploadErase(EraseURL,URLID+"@"+Version+"_eraseRGB.png",TargetPos,URLID);
 
-    BroadcastMessage("getSpatialTexture"); 
+    //BroadcastMessage("getSpatialTexture"); 
 
         // if(FileCheck==null)
         // FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
@@ -617,7 +727,19 @@ public void CreareEraseMask(){
 
 public void ReconstructionTheModel(){
 
-    StartGeneration();
+
+    if(!manager.forMovie)
+        StartGeneration();
+
+    else{
+
+
+        if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "20250406175338f3a773eeMovie.zip"));
+
+
+
+    }
 
 
 
@@ -626,12 +748,25 @@ public void ReconstructionTheModel(){
 public void ChangeMaterial(){
 
 
+     if(!manager.forMovie){
 
-        fast3DFunctions.ChangeMaterial(commandURL,URLID+"@"+Version,prompt);
-
+           fast3DFunctions.ChangeMaterial(commandURL,URLID+"@"+Version,prompt);
          if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Texture.zip"));
+     }
 
+     else{
+
+
+        fast3DFunctions.ChangeMaterial(commandURL,"20250406175338f3a773eeMovie",prompt);
+         if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "20250406175338f3a773eeMovie_Texture.zip"));
+
+
+
+     }
+
+     
 
 
 
@@ -639,14 +774,24 @@ public void ChangeMaterial(){
 
 
 public void DrawingToModel(){
-
-
-
+   
+   if(!manager.forMovie)
     modifywithPrompt();
 
+    else{
+
+
+        //fast3DFunctions.UploadDrawing("http://192.168.0.139:5000/DrawToModel",URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
+        fast3DFunctions.ObjwithDrawing(Drawingto3DURL,URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
+
+        if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+
+        loadingParticles.Play();
 
 
 
+    }
 
 
 }
@@ -660,7 +805,7 @@ public void DrawingToModel(){
     public void StartGeneration(){
 
         if(!isselsected) return;
-        ClearAllChildren();
+        //ClearAllChildren();
 
         if(!Capturing)
             StartCoroutine(CaptureRouting());
@@ -668,14 +813,9 @@ public void DrawingToModel(){
         // fast3DFunctions.Capture(UploadURL,URLID+".png",ObjectScreenPosition(),URLID);
         // fast3DFunctions.UploadMask(UploadURL,URLID+"_Mask.png","MaskTest",ObjectScreenPosition(),URLID);         
       //FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL + URLID + "_reconstruct.zip"));
-
-
-    
-    
-    
     }
 
-        public void modifywithPrompt(){
+    public void modifywithPrompt(){
 
 
 
@@ -708,7 +848,7 @@ public void DrawingToModel(){
        
 
         Vector2 TargetPos=ObjectScreenPosition();
-        fast3DFunctions.ToggleCullingMask();
+        // fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
        fast3DFunctions.ModifyCapture(UploadURL,URLID+"@"+Version+"_Modify.png",TargetPos,URLID+"@"+Version);
         
@@ -718,8 +858,8 @@ public void DrawingToModel(){
           
          //yield return new WaitForSeconds(0.3f);
         //fast3DFunctions.CaptureDepth(UploadURL,URLID+"_Depth.png",TargetPos,URLID);
-        yield return new WaitForSeconds(0.3f);
-        fast3DFunctions.ToggleCullingMask();
+        // yield return new WaitForSeconds(0.3f);
+        // fast3DFunctions.ToggleCullingMask();
         if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_reconstruct.zip"));
         // drawingSystem.ClearAndDestroyStackObjects();
@@ -741,6 +881,10 @@ public void DrawingToModel(){
         Vector2 TargetPos =ObjectScreenPosition();
        // fast3DFunctions.ToggleCullingMask();
         yield return new WaitForSeconds(0.3f);
+
+        if(MaskDrawing!=null)fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID+"@"+Version,MaskDrawing.isOn);
+
+        else
         fast3DFunctions.Capture(UploadURL,URLID+"@"+Version+".png",TargetPos,URLID+"@"+Version);
         //fast3DFunctions.UploadDepthMap(UploadURL,URLID+"@"+Version+"_Depth.png",TargetPos,URLID+"@"+Version);
         

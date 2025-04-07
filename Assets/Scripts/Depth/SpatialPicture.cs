@@ -25,10 +25,15 @@ public class SpatialPicture : MonoBehaviour
     public Transform HeadCamera;
 
     public GameObject HideSpot;
+    public GameObject Cover;
+
+    public float currentDepth;
+
+    
     // Start is called before the first frame update
     void Start()
     {
-        // manager = FindObjectOfType<RealityEditorManager>();
+        manager = FindObjectOfType<RealityEditorManager>();
 
         donwloadurl="http://192.168.0.139:8000/";
 
@@ -40,10 +45,15 @@ public class SpatialPicture : MonoBehaviour
         
 
     //    meshRenderer=GetComponent<MeshRenderer>();
+
+       
        
        material=meshRenderer.materials[0];
 
 
+       currentDepth= material.GetFloat("_Power");
+
+        if(!manager.forMovie)
         StartCoroutine(CheckAndUpdateTexturesPeriodically(donwloadurl+URLID+"_EraseMask.png",donwloadurl+URLID+"_Remove_Depth.png"));
     }
 
@@ -54,6 +64,38 @@ public class SpatialPicture : MonoBehaviour
         //     meshRenderer.gameObject.transform.LookAt(HeadCamera.position);
         // }
         
+    }
+
+
+
+    public void Scaleup(float s){
+
+
+    Cover.transform.localScale+=new Vector3(s,s,s);
+
+
+
+
+    }
+
+    public void movingMaskZ(float x,float y, float z){
+
+
+        Cover.transform.localPosition+=new Vector3(x,y,z);
+
+
+
+
+    }
+
+    public void setDepth(float z){
+
+        currentDepth+=z;
+
+        material.SetFloat("_Power",currentDepth);
+
+
+
     }
 
 
