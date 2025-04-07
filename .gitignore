@@ -112,3 +112,4 @@ Packages/com.unity.xr.picoxr
 # Cache files
 *.cache
 *.apk
+Assets/OpenCVForUnity/Extra.unitypackage
