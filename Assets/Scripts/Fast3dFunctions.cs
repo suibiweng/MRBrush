@@ -25,7 +25,7 @@ public class Fast3dFunctions : MonoBehaviour
 
 
     public static Texture2D streamingTexture;
-    public RenderTexture Mask,Depth,Obj;
+    public RenderTexture Mask,Depth,ObjTexture;
 
     public WebCamTextureManager webCamTextureManager;
 
@@ -232,15 +232,10 @@ void InitCameraMask(){
 
     public void ModifyCapture(string url, string filename,Vector2 objPosition,string urlid)
     {
-           Texture2D texture2D = ConvertRenderTextureToTexture2D(Obj);
-        
-        if (streamingTexture == null)
-        {
-            Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
-            return;
-        }
+           Texture2D texture = ConvertRenderTextureToTexture2D(ObjTexture);
 
-        StartCoroutine(UploadPNG(texture2D, url, filename,"",false,0,objPosition,false,"RGB_modify",urlid));
+
+        StartCoroutine(UploadPNG(texture, url, filename,"",false,0,objPosition,false,"RGB_modify",urlid));
     }
 
 
@@ -283,8 +278,8 @@ void InitCameraMask(){
     
     {
 
-          Texture2D texture2D = ConvertRenderTextureToTexture2D(Obj);
-        if (streamingTexture == null)
+          Texture2D texture2D = ConvertRenderTextureToTexture2D(ObjTexture);
+        if (texture2D == null)
         {
             Debug.LogError("No texture set for streaming. Use UpdateTexture to set a texture first.");
             return;
@@ -387,7 +382,7 @@ void InitCameraMask(){
 
     public void ObjwithDrawing(string url, string filename, string prompt,Vector2 objPosition,string urlid)
     {
-        Texture2D texture2D = ConvertRenderTextureToTexture2D(Obj);
+        Texture2D texture2D = ConvertRenderTextureToTexture2D(ObjTexture);
         StartCoroutine(Drawinto3D(texture2D,url,filename,objPosition,prompt,urlid));
         Destroy(texture2D); // Clean up after upload
     }
@@ -440,16 +435,16 @@ void InitCameraMask(){
 public IEnumerator UploadPNG(Texture2D texture, string url, string filename, string prompt, bool flipY, int xOffset, Vector2 objectPosition, bool debugDraw, string type,string urlid,bool drawingMsk=false)
 {
 
-      Texture2D msk = ConvertRenderTextureToTexture2D(Mask);
-    byte[] mskData =msk.EncodeToPNG();
+    //   Texture2D msk = ConvertRenderTextureToTexture2D(Mask);
+    // byte[] mskData =msk.EncodeToPNG();
     byte[] pngData = texture.EncodeToPNG();
     if (pngData != null)
     {
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", pngData, filename, "image/png");
 
-        if(drawingMsk) form.AddBinaryData("Mask", mskData, filename+"Msk", "image/png");
-        else form.AddBinaryData("Mask", null, null, "image/png");
+        // if(drawingMsk) form.AddBinaryData("Mask", mskData, filename+"Msk", "image/png");
+        // else form.AddBinaryData("Mask", null, null, "image/png");
 
 
 

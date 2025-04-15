@@ -33,7 +33,7 @@ public class SpatialPicture : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        manager = FindObjectOfType<RealityEditorManager>();
+        manager = FindAnyObjectByType<RealityEditorManager>();
 
         donwloadurl="http://192.168.0.139:8000/";
 

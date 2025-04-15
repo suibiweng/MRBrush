@@ -151,7 +151,7 @@ public class ReConstructSpot : MonoBehaviour
         //  FileCheck= StartCoroutine(CheckURLPeriodically("http://192.168.0.139:8000/20250318172841370b55bf@1_Texture.zip"));
     
     
-    
+    // DrawingToModel();
     }
 
 
@@ -574,6 +574,19 @@ public class ReConstructSpot : MonoBehaviour
         }
 
 
+
+
+
+
+
+
+        // if (Input.GetKeyDown(KeyCode.P)){
+           
+        //           DrawingToModel();
+
+        // }
+
+
         
 
 
@@ -758,7 +771,7 @@ public void ChangeMaterial(){
      else{
 
 
-        fast3DFunctions.ChangeMaterial(commandURL,"20250406175338f3a773eeMovie",prompt);
+        // fast3DFunctions.ChangeMaterial(commandURL,"20250406175338f3a773eeMovie",prompt);
          if(FileCheck==null)
             FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + "20250406175338f3a773eeMovie_Texture.zip"));
 
@@ -775,7 +788,7 @@ public void ChangeMaterial(){
 
 public void DrawingToModel(){
    
-   if(!manager.forMovie)
+   if(manager.forMovie)
     modifywithPrompt();
 
     else{

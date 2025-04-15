@@ -314,7 +314,7 @@ if (leftTrigger > 0.1f)
         sp.URLID=URLID;
         sp.HideSpot.transform.localScale=Eraseindicator.transform.localScale;
         currentMsk=sp;
-        // sp.getSpatialTexture(URLID);
+        sp.getSpatialTexture(URLID);
         Captured=true;
         Eraseindicator.transform.localScale=originalScale;
 
