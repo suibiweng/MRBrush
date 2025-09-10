@@ -10,6 +10,8 @@ using DimBoxes;
 using Oculus.Interaction;
 using Klak.Ndi.Interop;
 using System.Drawing;
+using Fusion;
+
 
 public enum PromptType{
     DreamMesh=0,
@@ -23,7 +25,7 @@ public enum PromptType{
 }
 
 
-
+//on 4/7/2025 Sawyer is adding network functionality to this script. rather that making a whole new script. 
 public class ReConstructSpot : MonoBehaviour
 {
 
@@ -39,9 +41,6 @@ public class ReConstructSpot : MonoBehaviour
 
     public Toggle MaskDrawing;
 
-
-    
-    
 
 
 
@@ -110,14 +109,28 @@ public class ReConstructSpot : MonoBehaviour
 
    public bool isStrokesOnly;
 
+
+
+   //Netorked variable
+
+      private NetworkRunner _runner;
+    private NetworkObject _networkObject;
+    private PhotonDataSync _photonDataSync;
+    private GenerateSpotRPC _generateSpotRPC;
+    private string oldPrompt; 
+ 
     void Start()
     {
 
         ObjectsVersion= new List<GameObject>();
         AimStar=GameObject.FindWithTag("AimStar");
         Tracker=GameObject.FindWithTag("Tracker").transform;
-    
 
+    
+        _runner =FindObjectOfType<NetworkRunner>();
+        _networkObject = GetComponent<NetworkObject>();
+        _photonDataSync = GetComponent<PhotonDataSync>();
+        _generateSpotRPC = GetComponent<GenerateSpotRPC>(); 
 
 
 
@@ -420,8 +433,9 @@ public class ReConstructSpot : MonoBehaviour
         //fast3DFunctions.UploadDrawing("http://192.168.0.139:5000/DrawToModel",URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
         fast3DFunctions.UploadDrawing(Drawingto3DURL,URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
 
-        if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+        // if(FileCheck==null)
+        //     FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+        RPCGenrateModel(); //Doing the file checking by sending it to the RPC, then it executes the function on all clients.
 
         loadingParticles.Play();
 
@@ -538,12 +552,59 @@ public class ReConstructSpot : MonoBehaviour
 
 
 
+[ContextMenu("Confirm Generation")]
+    private void confirmGenFromEditor()
+    {
+        // ConfirmGeneration();   //make sure to reimplement this for RE2.0
+        _generateSpotRPC.CallConfirmGenerationRPC();
+    }
+    
+    
+    [ContextMenu("Request ownership")]
+    private void takeOwnership()
+    {
+        StartCoroutine(GimmeYoAuthority()); 
+    }
+
+    IEnumerator GimmeYoAuthority()
+    {
+        while (!_networkObject.HasInputAuthority || !_networkObject.HasStateAuthority)
+        {
+            if (!_networkObject.HasStateAuthority)
+            {
+                _networkObject.RequestStateAuthority();
+                yield return 0.5f;
+            }
+            else
+            {
+                _networkObject.AssignInputAuthority(_runner.LocalPlayer);
+                yield return 0.5f;
+            }
+             
+        }
+    }
+    
+    public void RPCGenrateModel()
+    {
+
+        //this is the official method of ReConstructSpot. Sponsored by Sawyer.
+        if(FileCheck==null)
+            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+
+        loadingParticles.Play();
+    
+    }
     
 
     // Update is called once per frame
     void Update()
     {
 
+        if (prompt != oldPrompt)
+        {
+            _photonDataSync.UpdatePrompt(prompt);  // just realized that we sync the URLid in the manager. 
+        }
+        oldPrompt = prompt; 
 
         tracking();
 
@@ -677,7 +738,11 @@ public class ReConstructSpot : MonoBehaviour
 
         manager.updateSelected( URLID);
         isselsected = true;
-       
+       if (_networkObject.HasStateAuthority == false)
+        {
+            takeOwnership(); //this is sawyers function that is taking authority and nothing is stopping it!!!
+
+        }  
 
     }
 
@@ -719,8 +784,9 @@ bool Capturing=false;
 public void CreateDreamMesh(){
 
     fast3DFunctions.DreamMesh(commandURL,URLID+"@"+Version,prompt);
-         if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
+        //  if(FileCheck==null)
+        //     FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_ShapE.zip"));
+        RPCGenrateModel(); //Doing the file checking by sending it to the RPC, then it executes the function on all clients.
 
 }
 
@@ -764,8 +830,10 @@ public void ChangeMaterial(){
      if(!manager.forMovie){
 
            fast3DFunctions.ChangeMaterial(commandURL,URLID+"@"+Version,prompt);
-         if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Texture.zip"));
+        //  if(FileCheck==null)
+        //     FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Texture.zip"));
+        RPCGenrateModel(); //Doing the file checking by sending it to the RPC, then it executes the function on all clients.
+
      }
 
      else{
@@ -797,8 +865,10 @@ public void DrawingToModel(){
         //fast3DFunctions.UploadDrawing("http://192.168.0.139:5000/DrawToModel",URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
         fast3DFunctions.ObjwithDrawing(Drawingto3DURL,URLID+"@"+Version+"_Darwing3D.png",prompt,ObjectScreenPosition(),URLID+"@"+Version);
 
-        if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+        // if(FileCheck==null)
+        //     FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_Drawing.zip"));
+        RPCGenrateModel(); //Doing the file checking by sending it to the RPC, then it executes the function on all clients.
+
 
         loadingParticles.Play();
 
@@ -873,8 +943,10 @@ public void DrawingToModel(){
         //fast3DFunctions.CaptureDepth(UploadURL,URLID+"_Depth.png",TargetPos,URLID);
         // yield return new WaitForSeconds(0.3f);
         // fast3DFunctions.ToggleCullingMask();
-        if(FileCheck==null)
-            FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_reconstruct.zip"));
+        // if(FileCheck==null)
+        //     FileCheck= StartCoroutine(CheckURLPeriodically(DownloadURL+"/" + URLID+"@"+Version + "_reconstruct.zip"));
+        RPCGenrateModel(); //Doing the file checking by sending it to the RPC, then it executes the function on all clients.
+
         // drawingSystem.ClearAndDestroyStackObjects();
 
         Capturing=false;
@@ -936,8 +1008,24 @@ public void DrawingToModel(){
 
 
         }
+      deletespot(); //This Needs to be tested this is what handles the network side of deleting
 
 
+    }
+   
+    public void deletespot()
+    {
+        
+        if (_runner == null || !_runner.IsRunning)
+        {
+            Debug.LogError("NetworkRunner is not running. Cannot destroy network object.");
+            return;
+        }
+        //might need to make this an RPC, since it's getting added to other peoples dictionaries when they grab this cube
+        //But it isn't being removed from their dictionary here. Not removing it from the dictionary is currently breaking things
+        _generateSpotRPC.CallDeleteSpotRPC(); //This Needs to be tested
+        _runner.Despawn(GetComponent<NetworkObject>());
+        Destroy(gameObject);
     }
 
 
@@ -957,7 +1045,7 @@ public void DrawingToModel(){
 
     
 
-
+ 
 
 
 

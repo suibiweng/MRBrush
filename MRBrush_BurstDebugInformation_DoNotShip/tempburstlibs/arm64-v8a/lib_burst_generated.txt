@@ -1,4 +1,4 @@
-Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+Library: D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --platform=Android
 --backend=burst-llvm-16
 --target=ARMV8A_AARCH64
@@ -7,11 +7,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.CPUBackend+ConvJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::CanUseDepthwiseConvKernel(Unity.Sentis.CPUBackend+ConvJob*, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null)--baf95063e686b1887770477a0000aa21
@@ -23,11 +23,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+ModIntJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+ModIntJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--41909a6b12ff3302be93bf0cb8cef0b4
@@ -139,11 +139,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --float-precision=Standard
 --target-framework=NetFramework
 --float-mode=Fast
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+CumSumIntJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+CumSumIntJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--d89ab8f510236d0759053e9aaea43fa1
@@ -204,11 +204,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[GLTFast.Jobs.ConvertUVsFloatToFloatInterleavedJob, glTFast, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(GLTFast.Jobs.ConvertUVsFloatToFloatInterleavedJob&, glTFast, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--5c7db452ab5796006eecfe194a0df4b9
@@ -320,11 +320,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --float-precision=Low
 --target-framework=NetFramework
 --float-mode=Fast
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.Sentis.CPUBackend+GlobalAverageVariancePoolJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+GlobalAverageVariancePoolJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--85c71c550c6736aa82127778d6c8c5d8
@@ -336,11 +336,11 @@ Library: /Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_bu
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/suibi/VR-Drawing/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.35f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/suibi/VR-Drawing/Library/Burst
---output=/Users/suibi/VR-Drawing/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\SuibiUnityProject\MRBrush\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.35f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\SuibiUnityProject\MRBrush\Library\Burst
+--output=D:\SuibiUnityProject\MRBrush\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+ScalarMadFloatJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+ScalarMadFloatJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--7cf54992d39636059998df6a6c19984c

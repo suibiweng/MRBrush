@@ -18995,6 +18995,7 @@ MonoBehaviour:
   VersionInfoText: {fileID: 0}
   SizeAdjustment: {fileID: 0}
   TransparentAdjustment: {fileID: 0}
+  MaskDrawing: {fileID: 0}
   PromptModes: {fileID: 0}
   promptType: 0
   Version: 0
@@ -19024,6 +19025,7 @@ MonoBehaviour:
   debugPrompt: a Red Apple
   ObjectsVersion: []
   AimStar: {fileID: 0}
+  isStrokesOnly: 0
   checkInterval: 5
 --- !u!114 &3730410076782256520
 MonoBehaviour:

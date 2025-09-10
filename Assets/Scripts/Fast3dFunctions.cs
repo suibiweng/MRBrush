@@ -34,11 +34,11 @@ public class Fast3dFunctions : MonoBehaviour
      Texture2D  updatetexture2D;
 
     void Start() {
-  //      InitCameraMask();
+       InitCameraMask();
         //displayCaptureManager= FindAnyObjectByType<DisplayCaptureManager>();
        // StartCapture();
 
-    // ToggleCullingMask();
+    ToggleCullingMask();
 
 
     //updatetexture2D = new Texture2D(webCamTextureManager.WebCamTexture.width, webCamTextureManager.WebCamTexture.height, TextureFormat.RGBA32, false);
